@@ -16,7 +16,8 @@
 <br />
 
 <nav class="links">
-	<div class="link"><a href="https://github.com/f0e/blur">homepage</a></div>
+	<div class="link"><a href="https://blur.tekno.sh">homepage</a></div>
+	<div class="link"><a href="https://github.com/f0e/blur">github</a></div>
 	<div class="link">
 		<a href="https://github.com/f0e/blur/releases/latest">download</a>
 	</div>
