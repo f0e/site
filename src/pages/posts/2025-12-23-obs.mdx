@@ -4,7 +4,7 @@ title: making OBS Replay Buffer a proper Shadowplay alternative
 date: 2025-12-23
 ---
 
-By default, OBS's Replay Buffer is frustrating to use as a Shadowplay alternative. Thankfully, there are plugins available that emulate many aspects of Shadowplay's behaviour, as well as adding other niceties.
+By default, OBS's replay buffer is frustrating to use as a Shadowplay alternative. Thankfully, there are plugins available that emulate many aspects of Shadowplay's behaviour, as well as adding other niceties.
 
 ## why even use OBS over Shadowplay?
 
@@ -32,9 +32,9 @@ There are some OBS plugins I use to make things much more shadowplay-like:
 ### [obs-hadowplay](https://github.com/f0e/obs-hadowplay)
 
 Provides a ton of functionality like:
-- Automatically starting/stopping Replay Buffer when games are being captured
+- Automatically starting/stopping replay buffer when games are being captured
 - Sorting game recordings into their own folders
-- Playing a sound and showing a desktop notification on Replay Buffer save
+- Playing a sound and showing a desktop notification on replay buffer save
 
 I've linked to my fork, which also allows for desktop capture (like Shadowplay) and the use of a post-save script, to do stuff like running [unEQ](https://github.com/f0e/uneq) automatically.
 
@@ -91,11 +91,21 @@ _There are other alternative plugins that do similar things to this one, but thi
 
 ### [OBS-NoPreventSleep](https://github.com/Meachamp/OBS-NoPreventSleep)
 
-OBS by default prevents your displays from turning off and your machine from sleeping when Replay Buffer is enabled.
+OBS by default prevents your displays from turning off and your machine from sleeping when replay buffer is enabled.
 
 ### [OBS-Indicator](https://github.com/ineedmypills/OBS-Indicator)
 
-This gives you a nice indicator in the corner of the screen when Replay Buffer is turned on, when you're recording, when a Replay Buffer is saved, etc. Unfortunately this can't work with exclusive full-screen games, since that requires hooking into games, which anticheats don't like.
+This gives you a nice indicator in the corner of the screen when replay buffer is turned on, when you're recording, when a replay buffer is saved, etc. Unfortunately this can't work with exclusive full-screen games, since that requires hooking into games, which anticheats don't like.
+
+## running on startup
+
+You can make OBS run when your computer starts up by adding a shortcut to it inside `shell:startup`.
+
+There's also some flags you can add to the `target` field in the shortcut's properties if you want:
+
+- `--minimize-to-tray` does what it says
+- `--disable-shutdown-check` stops the "OBS Studio did not properly shut down" dialog from appearing
+- `--startreplaybuffer` automatically starts your replay buffer, useful if you aren't using obs-hadowplay
 
 ## downsides
 
