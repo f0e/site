@@ -5,7 +5,7 @@ title: tek
 
 import Posts from "../components/Posts.astro";
 
-import FmRecent from "../components/FmRecent.astro";
+import FmRecentLive from "../components/FmRecentLive.svelte";
 import FmTopAlbums from "../components/FmTopAlbums.astro";
 
 # Welcome
@@ -16,7 +16,7 @@ import FmTopAlbums from "../components/FmTopAlbums.astro";
 
 ### music log [(last.fm)](https://www.last.fm/user/xSFnLFcIYTj)
 
-<FmRecent username="xSFnLFcIYTj" apiKey="4f038eb807a90406096fd871b5d279b9"/>
+<FmRecentLive username="xSFnLFcIYTj" apiKey="4f038eb807a90406096fd871b5d279b9" client:load />
 
 ### most played (30d)
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { slide, fade } from 'svelte/transition'; // import fade
+	import { slide, fade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import RecentTrack from './RecentTrack.svelte';
 	import type { Track } from '../utils/lastfm';
@@ -9,10 +9,9 @@
 	export let username: string;
 	export let apiKey: string;
 	export let limit: number = 5;
-	export let pollInterval: number = 30000;
-	export let initialTracks: Track[] = [];
+	export let pollInterval: number = 10000;
 
-	let tracks: Track[] = [...initialTracks];
+	let tracks: Track[] = [];
 
 	const updateTracks = async () => {
 		try {
@@ -24,6 +23,8 @@
 	};
 
 	onMount(() => {
+		updateTracks();
+
 		const pollTimer = setInterval(updateTracks, pollInterval);
 		return () => clearInterval(pollTimer);
 	});
