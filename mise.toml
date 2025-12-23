@@ -1,0 +1,19 @@
+[tools]
+bun = "latest"
+node = "latest"
+"pipx:pre-commit" = "latest"
+
+[tasks.setup]
+run = """
+bun install
+pre-commit install
+"""
+
+[tasks.dev]
+run = "bun run astro dev"
+
+[tasks.build]
+run = "bun run astro build"
+
+[tasks.preview]
+run = "bun run astro preview"

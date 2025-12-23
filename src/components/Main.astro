@@ -1,0 +1,80 @@
+---
+import Circles from "./Circles.svelte";
+import ThemeSwitcher from "./ThemeSwitcher.astro";
+
+const animDuration = "0.4s";
+
+const anim = {
+  old: {
+    name: "motion-blur-out",
+    duration: animDuration,
+  },
+  new: {
+    name: "motion-blur-in",
+    duration: animDuration,
+  },
+};
+
+const customTransition = {
+  forwards: anim,
+  backwards: anim,
+};
+
+const isRoot = Astro.url.pathname === "/";
+---
+
+<body
+  class="flex justify-center
+  bg-white text-black dark:bg-black dark:text-white
+  font-mono
+  text-xs
+  transition-[background-color] duration-200"
+>
+  {isRoot && <Circles client:load />}
+
+  <main
+    class={`prose dark:prose-invert md:p-8 sm:p-6 p-4
+    ${!isRoot && "max-w-[70ch]"}
+  `}
+    transition:animate={customTransition}
+  >
+    {
+      !isRoot && (
+        <a href="/" class="mb-4">
+          <p class="mt-0">back</p>
+        </a>
+      )
+    }
+    <slot />
+
+    <hr />
+
+    <div class="flex justify-between gap-3">
+      <a href="https://github.com/f0e/f0e.github.io">site source code</a>
+      <ThemeSwitcher />
+    </div>
+  </main>
+</body>
+
+<style>
+  :root {
+    --anim-distance: 20px;
+    --blur-amount: 8px;
+  }
+
+  @keyframes motion-blur-in {
+    from {
+      opacity: 0;
+      transform: translateX(var(--anim-distance));
+      filter: blur(var(--blur-amount));
+    }
+  }
+
+  @keyframes motion-blur-out {
+    to {
+      opacity: 0;
+      transform: translateX(calc(-1 * var(--anim-distance)));
+      filter: blur(var(--blur-amount));
+    }
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+import { type Album, sizeMap, fetchTopAlbums } from "../utils/lastfm";
+
+interface Props {
+  username: string;
+  apiKey: string;
+  limit?: number;
+}
+
+const { username, apiKey, limit = 9 } = Astro.props;
+
+let albums: Album[] = [];
+let error: string | null = null;
+
+try {
+  albums = await fetchTopAlbums(username, apiKey, limit);
+} catch (e) {
+  error = e instanceof Error ? e.message : "Unknown error";
+}
+
+const getAlbumImageData = (album: Album) => {
+  const images = album.image.filter((img) => img["#text"]).reverse();
+  const defaultImage = images[0]?.["#text"] || "";
+  const srcset = images
+    .map((img) => `${img["#text"]} ${sizeMap[img.size] || 174}w`)
+    .join(", ");
+  return { defaultImage, srcset };
+};
+---
+
+{
+  error ? (
+    <p class="text-red-600">{error}</p>
+  ) : albums.length === 0 ? (
+    <p class="text-neutral-500">No albums found</p>
+  ) : (
+    <div class="not-prose grid grid-cols-3 gap-3">
+      {albums.map((album) => {
+        const image =
+          album.image.find((img) => img.size === "large")?.["#text"] ||
+          album.image[album.image.length - 1]?.["#text"];
+
+        return (
+          <a
+            href={album.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group relative aspect-square overflow-hidden"
+          >
+            {image ? (
+              <img
+                src={image}
+                alt={`${album.name} by ${album.artist.name}`}
+                loading="lazy"
+                class="w-full h-full object-cover"
+              />
+            ) : (
+              <div class="w-full h-full bg-neutral-100 flex items-center justify-center text-4xl text-neutral-300">
+                ♪
+              </div>
+            )}
+
+            <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-90 flex items-center justify-center p-4">
+              <div class="opacity-0 group-hover:opacity-100 text-center text-white pointer-events-none">
+                <h3 class="font-semibold text-sm mb-1">{album.name}</h3>
+                <p class="text-xs text-neutral-300 mb-2">{album.artist.name}</p>
+                <p class="text-xs text-neutral-400">{album.playcount} plays</p>
+              </div>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  )
+}

@@ -1,0 +1,23 @@
+---
+layout: ../layouts/Layout.astro
+title: tek
+---
+
+import Posts from "../components/Posts.astro";
+
+import FmRecent from "../components/FmRecent.astro";
+import FmTopAlbums from "../components/FmTopAlbums.astro";
+
+# Welcome
+
+## posts
+
+<Posts/>
+
+### music log [(last.fm)](https://www.last.fm/user/xSFnLFcIYTj)
+
+<FmRecent username="xSFnLFcIYTj" apiKey="4f038eb807a90406096fd871b5d279b9"/>
+
+### most played (30d)
+
+<FmTopAlbums username="xSFnLFcIYTj" apiKey="4f038eb807a90406096fd871b5d279b9"/>

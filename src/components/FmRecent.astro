@@ -1,0 +1,22 @@
+---
+import FmRecentLive from "./FmRecentLive.svelte";
+import { fetchRecentTracks, type Track } from "../utils/lastfm";
+
+const { username, apiKey, limit = 5, pollInterval = 10000 } = Astro.props;
+
+let initialTracks: Track[] = [];
+try {
+  initialTracks = await fetchRecentTracks(username, apiKey, limit);
+} catch (e) {
+  console.error("Error fetching initial tracks:", e);
+}
+---
+
+<FmRecentLive
+  {username}
+  {apiKey}
+  {limit}
+  {pollInterval}
+  initialTracks={initialTracks}
+  client:load
+/>

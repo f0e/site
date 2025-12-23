@@ -1,0 +1,26 @@
+---
+const postModules = import.meta.glob("../pages/posts/*.mdx");
+const posts = [];
+
+for (const path in postModules) {
+  const post = await postModules[path]();
+  posts.push({
+    url: path.replace("../pages", "").replace(".mdx", ""),
+    title: post.frontmatter.title || "no title",
+    date: post.frontmatter.date || "no date",
+  });
+}
+
+posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+---
+
+<ul>
+  {
+    posts.map((post) => (
+      <li>
+        <a href={post.url}>{post.title}</a>
+        {post.date && ` — ${new Date(post.date).toLocaleDateString()}`}
+      </li>
+    ))
+  }
+</ul>

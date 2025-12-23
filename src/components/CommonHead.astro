@@ -1,0 +1,42 @@
+---
+import { ClientRouter } from "astro:transitions";
+---
+
+<head>
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width" />
+
+  <meta name="generator" content={Astro.generator} />
+
+  <title>tek</title>
+
+  <script is:inline>
+    window.ThemeProvider = (() => {
+      const applyTheme = () => {
+        document.documentElement.classList.toggle(
+          "dark",
+          localStorage.theme === "dark" ||
+            (!("theme" in localStorage) &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches)
+        );
+      };
+
+      const updateLabel = () => {
+        const elem = document.getElementById("theme-toggle");
+        if (!elem) return;
+        const themeLabel = localStorage.theme ?? "system";
+        elem.textContent = themeLabel;
+      };
+
+      applyTheme();
+
+      return {
+        applyTheme,
+        updateLabel,
+      };
+    })();
+  </script>
+
+  <ClientRouter />
+</head>

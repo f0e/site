@@ -1,19 +1,22 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
-	import { theme } from '../stores';
 
-	let canvas;
+	let canvas: HTMLCanvasElement;
 	let innerWidth = 0;
 	let innerHeight = 0;
 
-	const lerp = (a, b, t) => (1 - t) * a + t * b;
+	const lerp = (a: number, b: number, t: number) => (1 - t) * a + t * b;
 
 	let lastQuadrant = -1;
 
 	const circleSpeed = 1;
-	const circleMaxAlpha = 1;
+	const circleMaxAlpha = 0.4;
 
 	class Circle {
+		x = 0;
+		y = 0;
+		radius = 0;
+
 		constructor() {
 			this.reset();
 		}
@@ -26,22 +29,22 @@
 				this.radius = 0;
 
 				if (this.x <= 0.5 && this.y <= 0.5) quadrant = 0;
-				if (this.x > 0.5 && this.y <= 0.5) quadrant = 1;
-				if (this.x <= 0.5 && this.y > 0.5) quadrant = 2;
-				if (this.x > 0.5 && this.y > 0.5) quadrant = 3;
-			} while (quadrant == lastQuadrant);
+				else if (this.x > 0.5 && this.y <= 0.5) quadrant = 1;
+				else if (this.x <= 0.5 && this.y > 0.5) quadrant = 2;
+				else if (this.x > 0.5 && this.y > 0.5) quadrant = 3;
+			} while (quadrant === lastQuadrant);
 
 			lastQuadrant = quadrant;
 		}
 
-		animate(delta) {
+		animate(delta: number) {
 			this.radius = lerp(this.radius, 1, circleSpeed * delta);
 		}
 
-		draw(ctx) {
+		draw(ctx: CanvasRenderingContext2D) {
 			const alpha = (1 - this.radius) * circleMaxAlpha;
-
-			ctx.strokeStyle = $theme == 'dark' ? '#fff' : '#000';
+			const isDark = document.documentElement.classList.contains('dark');
+			ctx.strokeStyle = isDark ? '#fff' : '#000';
 			ctx.globalAlpha = alpha;
 
 			ctx.beginPath();
@@ -64,15 +67,16 @@
 
 	onMount(() => {
 		const ctx = canvas.getContext('2d');
-		let frame = requestAnimationFrame(render);
+		if (!ctx) return;
 
-		let lastTime;
-		function render(time) {
+		let frame: number;
+		let lastTime: number | undefined;
+
+		function render(time: number) {
 			const delta = lastTime ? (time - lastTime) / 1000 : 1 / 60;
 			lastTime = time;
 			frame = requestAnimationFrame(render);
 
-			// update canvas size (resize event is inconsistent)
 			canvas.width = innerWidth;
 			canvas.height = innerHeight;
 
@@ -88,26 +92,12 @@
 			}
 		}
 
-		return () => {
-			cancelAnimationFrame(frame);
-		};
+		frame = requestAnimationFrame(render);
+
+		return () => cancelAnimationFrame(frame);
 	});
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<canvas class="circles" bind:this={canvas} />
-
-<style lang="scss">
-	.circles {
-		position: fixed;
-
-		top: 0;
-		left: 0;
-
-		width: 100%;
-		height: 100%;
-
-		z-index: -1;
-	}
-</style>
+<canvas bind:this={canvas} class="fixed top-0 left-0 w-full h-full -z-10" />
