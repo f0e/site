@@ -23,7 +23,7 @@
 				sizes="64px"
 				alt={`Cover art for ${artistName} - ${track.name}`}
 				loading="lazy"
-				class="w-full h-full object-cover"
+				class="w-full h-full object-cover fade-in"
 			/>
 		</a>
 	</div>

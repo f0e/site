@@ -78,3 +78,21 @@ const isRoot = Astro.url.pathname === "/";
     }
   }
 </style>
+
+<script is:inline>
+  // TODO: is there a better, more natively Astro way of doing this?
+
+  const images = document.querySelectorAll(".fade-in");
+
+  images.forEach((img) => {
+    if (!img.complete || img.naturalWidth === 0) {
+      // not already loaded, fade in
+      img.classList.add("opacity-0");
+
+      img.addEventListener("load", () => {
+        img.classList.add("transition-opacity", "duration-300");
+        img.classList.remove("opacity-0");
+      });
+    }
+  });
+</script>
