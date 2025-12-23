@@ -15,14 +15,16 @@
 <div
 	class={`not-prose flex items-center gap-4 text-xs p-2 outline-black/20 dark:outline-white/20 ${isNowPlaying ? 'outline-2 mb-1' : ''}`}
 >
-	<div class="w-16 h-16 overflow-hidden">
-		<a href={track.url} target="_blank" rel="noopener noreferrer" class="no-underline">
-			<FadingImage
-				image={track.image.at(-1)['#text']}
-				alt={`Cover art for ${artistName} - ${track.name}`}
-			/>
-		</a>
-	</div>
+	{#if track.image.length}
+		<div class="w-16 h-16 overflow-hidden">
+			<a href={track.url} target="_blank" rel="noopener noreferrer" class="no-underline">
+				<FadingImage
+					image={track.image.at(-1)['#text']}
+					alt={`Cover art for ${artistName} - ${track.name}`}
+				/>
+			</a>
+		</div>
+	{/if}
 
 	<div class="flex-1 min-w-0 leading-4">
 		<a href={track.url} target="_blank" rel="noopener noreferrer" class="hover:underline">
