@@ -1,0 +1,37 @@
+---
+import "../styles/global.css";
+
+import CommonHead from "../components/CommonHead.astro";
+import Main from "../components/Main.astro";
+
+const { title, date } = Astro.props.content;
+---
+
+<!doctype html>
+<html transition:name="root" transition:animate="none" lang="en">
+  <head>
+    <CommonHead />
+  </head>
+
+  <Main>
+    <a href="/" class="mb-4">
+      <p class="mt-0">back</p>
+    </a>
+
+    {date && <h1>{title}</h1>}
+
+    {
+      date && (
+        <p class="text-neutral-500">
+          {new Date(date).toLocaleDateString(undefined, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </p>
+      )
+    }
+
+    <slot />
+  </Main>
+</html>

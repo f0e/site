@@ -38,13 +38,6 @@ const isRoot = Astro.url.pathname === "/";
   `}
     transition:animate={customTransition}
   >
-    {
-      !isRoot && (
-        <a href="/" class="mb-4">
-          <p class="mt-0">back</p>
-        </a>
-      )
-    }
     <slot />
 
     <hr />
