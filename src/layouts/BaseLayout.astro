@@ -2,12 +2,14 @@
 import "../styles/global.css";
 
 import CommonHead from "../components/CommonHead.astro";
+
+const { title } = Astro.props;
 ---
 
 <!doctype html>
 <html transition:name="root" transition:animate="none" lang="en">
   <head>
-    <CommonHead />
+    <CommonHead title={title} />
   </head>
 
   <slot />

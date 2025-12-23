@@ -5,10 +5,10 @@ import BaseLayout from "./BaseLayout.astro";
 
 import Main from "../components/Main.astro";
 
-const { isPost } = Astro.props;
+const { title, isPost } = Astro.props;
 ---
 
-<BaseLayout>
+<BaseLayout title={title}>
   <Main isPost={isPost}>
     <slot />
   </Main>

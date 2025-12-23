@@ -1,5 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
+
+const { title } = Astro.props;
 ---
 
 <head>
@@ -10,7 +12,7 @@ import { ClientRouter } from "astro:transitions";
   <link rel="icon" href="/favicon.png" />
   <meta name="generator" content={Astro.generator} />
 
-  <title>tek</title>
+  <title>{`${title ? `${title} - ` : ""}tekno world`}</title>
 
   <script is:inline>
     window.ThemeProvider = (() => {
