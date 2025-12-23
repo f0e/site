@@ -1,4 +1,5 @@
 ---
+import Body from "./Body.astro";
 import Circles from "./Circles.svelte";
 import ThemeSwitcher from "./ThemeSwitcher.astro";
 
@@ -23,13 +24,7 @@ const customTransition = {
 const isRoot = Astro.url.pathname === "/";
 ---
 
-<body
-  class="flex justify-center
-  bg-[#f8f0eb] text-black dark:bg-black dark:text-white
-  font-mono
-  text-xs
-  transition-[background-color] duration-200"
->
+<Body>
   {isRoot && <Circles client:load />}
 
   <main
@@ -47,7 +42,7 @@ const isRoot = Astro.url.pathname === "/";
       <ThemeSwitcher />
     </div>
   </main>
-</body>
+</Body>
 
 <style>
   :root {

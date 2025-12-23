@@ -1,0 +1,14 @@
+---
+import "../styles/global.css";
+
+import CommonHead from "../components/CommonHead.astro";
+---
+
+<!doctype html>
+<html transition:name="root" transition:animate="none" lang="en">
+  <head>
+    <CommonHead />
+  </head>
+
+  <slot />
+</html>
