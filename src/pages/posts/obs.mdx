@@ -1,22 +1,22 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: making OBS Replay Buffer a proper Shadowplay alternative
+title: making OBS Replay Buffer a proper ShadowPlay alternative
 date: 2025-12-23
 ---
 
-By default, OBS's replay buffer is frustrating to use as a Shadowplay alternative. Thankfully, there are plugins available that emulate many aspects of Shadowplay's behaviour, as well as adding other niceties.
+By default, OBS's replay buffer is frustrating to use as a ShadowPlay/NVIDIA Share alternative. Thankfully, there are plugins available that emulate many aspects of ShadowPlay's behaviour, as well as adding other niceties.
 
-## why even use OBS over Shadowplay?
+## why even use OBS over ShadowPlay?
 
 ### framerate
 
-The main reason I use OBS is to record clips at a higher framerate than what Shadowplay allows. Shadowplay limits you to 120fps, whereas OBS has no limit as far as I'm aware. I change my recording FPS depending on what I'm playing - I try to set it to a number that's the maximum FPS I can typically hit. For competitive games, I use 360fps, and for more intensive games like Battlefield 6 I use 180fps.
+The main reason I use OBS is to record clips at a higher framerate than what ShadowPlay allows. ShadowPlay limits you to 120fps, whereas OBS has no limit as far as I'm aware. I change my recording FPS depending on what I'm playing - I try to set it to a number that's the maximum FPS I can typically hit. For competitive games, I use 360fps, and for more intensive games like Battlefield 6 I use 180fps.
 
-The benefit of recording in a high framerate is that you can do things like slow down the footage, or add motion blur through frame blending or via a tool like [Blur](https://github.com/f0e/blur) (self-plug), which can add even more frames to your footage through interpolation. When using Blur you want your input videos to have as high a framerate as possible, as the more information you can give the interpolation algorithms the less artifacting you'll get.
+The benefit of recording in a high framerate is that you can do things like slow down the footage or add motion blur through frame blending or via a tool like [Blur](https://github.com/f0e/blur) (self-plug), which can add even more frames to your footage through interpolation. When using Blur you want your input videos to have as high a framerate as possible, as the more information you can give the interpolation algorithms the less artifacting you'll get.
 
 ### audio tracks
 
-OBS also provides the ability to record with multiple audio tracks, not 2 for your desktop & microphone. I've got 4 channels:
+OBS also provides the ability to record with multiple audio tracks, not just 2 for your desktop & microphone. I've got 4 channels:
 
 - desktop (everything)
 - game
@@ -25,9 +25,9 @@ OBS also provides the ability to record with multiple audio tracks, not 2 for yo
 
 This is invaluable when editing footage, as you can adjust volume levels, mute songs if they're copyrighted, silence people talking, etc. This is all really easy too now thanks to OBS's new 'Audio Output Capture' source, and the 'Capture Audio' option on Game Capture sources.
 
-## emulating Shadowplay's behaviour through plugins
+## emulating ShadowPlay's behaviour through plugins
 
-There are some OBS plugins I use to make things much more shadowplay-like:
+There are some OBS plugins I use to make things much more ShadowPlay-like:
 
 ### [obs-hadowplay](https://github.com/f0e/obs-hadowplay)
 
@@ -37,7 +37,7 @@ Provides a ton of functionality like:
 - Sorting game recordings into their own folders
 - Playing a sound and showing a desktop notification on replay buffer save
 
-I've linked to my fork, which also allows for desktop capture (like Shadowplay) and the use of a post-save script, to do stuff like running [unEQ](https://github.com/f0e/uneq) automatically.
+I've linked to my fork, which also allows for desktop capture (like ShadowPlay) and the use of a post-save script, to do stuff like running [unEQ](https://github.com/f0e/uneq) automatically.
 
 <details>
   <summary>my post-save script</summary>
@@ -113,4 +113,4 @@ There's also some flags you can add to the `target` field in the shortcut's prop
 
 ## downsides
 
-There's still some parts of Shadowplay that I miss, in particular the reliability. I'll pretty regularly find that I want to clip something and OBS will have crashed at some point, with me not realising and forgetting to re-open it. This might be due to a plugin or setting I've configured, so I should probably look into this at some point. I don't think I've ever had Shadowplay turn off on me though, which is why I still run it as a secondary option. It's also nice to have it running alongside OBS since I can enable desktop capture, use a lower quality, and a much longer duration to capture non-gameplay stuff.
+There's still some parts of ShadowPlay that I miss, in particular the reliability. I'll pretty regularly find that I want to clip something and OBS will have crashed at some point, with me not realising and forgetting to re-open it. This might be due to a plugin or setting I've configured, so I should probably look into this at some point. I don't think I've ever had ShadowPlay turn off on me though, which is why I still run it as a secondary option. It's also nice to have it running alongside OBS since I can enable desktop capture, use a lower quality, and a much longer duration to capture non-gameplay stuff.
