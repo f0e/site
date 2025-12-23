@@ -32,6 +32,7 @@ There are some OBS plugins I use to make things much more shadowplay-like:
 ### [obs-hadowplay](https://github.com/f0e/obs-hadowplay)
 
 Provides a ton of functionality like:
+
 - Automatically starting/stopping replay buffer when games are being captured
 - Sorting game recordings into their own folders
 - Playing a sound and showing a desktop notification on replay buffer save
@@ -42,12 +43,14 @@ I've linked to my fork, which also allows for desktop capture (like Shadowplay) 
   <summary>my post-save script</summary>
 
 `uneq.bat`
+
 ```bat
 @echo off
 "C:\Program Files\Git\bin\bash.exe" "C:\Users\admin\Desktop\coding\scripts\uneq\uneq.sh" %*
 ```
 
 `uneq.sh`
+
 ```bash
 #!/bin/bash
 
@@ -85,6 +88,7 @@ done
 
 wait
 ```
+
 </details>
 
 _There are other alternative plugins that do similar things to this one, but this is the best I've found so far. Whenever I try another option they always seem to work in weird and unintuitive ways, and oftentimes have questionable code quality._

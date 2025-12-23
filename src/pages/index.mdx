@@ -20,12 +20,16 @@ import FmTopAlbums from "../components/FmTopAlbums.astro";
 
 ## posts
 
-<Posts/>
+<Posts />
 
 ### music log [(last.fm)](https://www.last.fm/user/xSFnLFcIYTj)
 
-<FmRecentLive username="xSFnLFcIYTj" apiKey="4f038eb807a90406096fd871b5d279b9" client:load />
+<FmRecentLive
+  username="xSFnLFcIYTj"
+  apiKey="4f038eb807a90406096fd871b5d279b9"
+  client:load
+/>
 
 ### most played (30d)
 
-<FmTopAlbums username="xSFnLFcIYTj" apiKey="4f038eb807a90406096fd871b5d279b9"/>
+<FmTopAlbums username="xSFnLFcIYTj" apiKey="4f038eb807a90406096fd871b5d279b9" />
