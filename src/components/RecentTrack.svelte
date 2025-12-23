@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { type Track, getTimeAgo, getImageData } from '../utils/lastfm';
-	import { fade } from 'svelte/transition';
+	import FadingImage from './FadingImage.svelte';
 
 	export let track: Track;
 
@@ -17,16 +17,10 @@
 >
 	<div class="w-16 h-16 overflow-hidden">
 		<a href={track.url} target="_blank" rel="noopener noreferrer" class="no-underline">
-			{#key srcset}
-				<img
-					{srcset}
-					sizes="64px"
-					alt={`Cover art for ${artistName} - ${track.name}`}
-					loading="lazy"
-					class="w-full h-full object-cover fade-in"
-					transition:fade={{ duration: 300 }}
-				/>
-			{/key}
+			<FadingImage
+				image={track.image.at(-1)['#text']}
+				alt={`Cover art for ${artistName} - ${track.name}`}
+			/>
 		</a>
 	</div>
 

@@ -25,49 +25,43 @@ try {
   ) : albums.length === 0 ? (
     <p class="text-neutral-500">No albums found</p>
   ) : (
-    <div class="flex justify-center items-center">
-      <div class="not-prose inline-grid place-items-center grid-cols-3 gap-[min(12px,2vw)]">
-        {albums.map((album) => {
-          const image =
-            album.image.find((img) => img.size === "large")?.["#text"] ||
-            album.image[album.image.length - 1]?.["#text"];
+    <div class="not-prose inline-grid place-items-center grid-cols-3 gap-[min(12px,2vw)] w-full">
+      {albums.map((album) => {
+        const image =
+          album.image.find((img) => img.size === "large")?.["#text"] ||
+          album.image[album.image.length - 1]?.["#text"];
 
-          return (
-            <a
-              href={album.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="relative group aspect-square overflow-hidden w-auto"
-            >
-              {image ? (
-                <img
-                  src={image}
-                  alt={`${album.name} by ${album.artist.name}`}
-                  loading="lazy"
-                  class="w-full h-full object-cover fade-in"
-                />
-              ) : (
-                <div class="w-full h-full flex flex-col items-center justify-center text-center text-neutral-300">
-                  <p>{album.name}</p>
-                  <p class="opacity-50">{album.artist.name}</p>
-                </div>
-              )}
-
-              <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-90 flex items-center justify-center p-4">
-                <div class="text-center text-white pointer-events-none">
-                  <h3 class="font-semibold text-sm mb-1">{album.name}</h3>
-                  <p class="text-xs text-neutral-300 mb-2">
-                    {album.artist.name}
-                  </p>
-                  <p class="text-xs text-neutral-400">
-                    {album.playcount} plays
-                  </p>
-                </div>
+        return (
+          <a
+            href={album.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="relative group aspect-square overflow-hidden w-full"
+          >
+            {image ? (
+              <img
+                src={image}
+                alt={`${album.name} by ${album.artist.name}`}
+                loading="lazy"
+                class="w-full h-full object-cover fade-in"
+              />
+            ) : (
+              <div class="w-full h-full flex flex-col items-center justify-center text-center text-neutral-300">
+                <p>{album.name}</p>
+                <p class="opacity-50">{album.artist.name}</p>
               </div>
-            </a>
-          );
-        })}
-      </div>
+            )}
+
+            <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-90 flex items-center justify-center p-4">
+              <div class="text-center text-white pointer-events-none">
+                <h3 class="font-semibold text-sm mb-1">{album.name}</h3>
+                <p class="text-xs text-neutral-300 mb-2">{album.artist.name}</p>
+                <p class="text-xs text-neutral-400">{album.playcount} plays</p>
+              </div>
+            </div>
+          </a>
+        );
+      })}
     </div>
   )
 }

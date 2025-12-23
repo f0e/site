@@ -4,10 +4,12 @@ import "../styles/global.css";
 import BaseLayout from "./BaseLayout.astro";
 
 import Main from "../components/Main.astro";
+
+const { isPost } = Astro.props;
 ---
 
 <BaseLayout>
-  <Main>
+  <Main isPost={isPost}>
     <slot />
   </Main>
 </BaseLayout>
