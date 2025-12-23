@@ -17,15 +17,6 @@ try {
 } catch (e) {
   error = e instanceof Error ? e.message : "Unknown error";
 }
-
-const getAlbumImageData = (album: Album) => {
-  const images = album.image.filter((img) => img["#text"]).reverse();
-  const defaultImage = images[0]?.["#text"] || "";
-  const srcset = images
-    .map((img) => `${img["#text"]} ${sizeMap[img.size] || 174}w`)
-    .join(", ");
-  return { defaultImage, srcset };
-};
 ---
 
 {
