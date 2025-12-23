@@ -16,7 +16,6 @@
 	const updateTracks = async () => {
 		try {
 			tracks = await fetchRecentTracks(username, apiKey, limit);
-			console.log('updated tracks', tracks);
 		} catch (error) {
 			console.error('Error fetching tracks:', error);
 		}
