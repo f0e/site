@@ -100,4 +100,5 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<canvas bind:this={canvas} class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none" />
+<canvas bind:this={canvas} class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"
+></canvas>
