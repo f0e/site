@@ -11,13 +11,17 @@
 	export let limit: number = 5;
 	export let pollInterval: number = 10000;
 
+	let currentTrack: Track | undefined;
 	let tracks: Track[] = [];
 
 	const updateTracks = async () => {
 		try {
-			tracks = await fetchRecentTracks(username, apiKey, limit);
+			const newTracks = await fetchRecentTracks(username, apiKey, limit);
+
+			tracks = newTracks.filter((track) => !track['@attr']?.nowplaying);
+			currentTrack = newTracks.find((track) => track['@attr']?.nowplaying);
 		} catch (error) {
-			console.error('Error fetching tracks:', error);
+			console.error('error fetching recent tracks:', error);
 		}
 	};
 
@@ -30,6 +34,10 @@
 </script>
 
 <div>
+	{#if currentTrack}
+		<RecentTrack track={currentTrack} />
+	{/if}
+
 	{#each tracks as track (getTrackId(track))}
 		<div in:slide={{ duration: 500 }} out:fade={{ duration: 500 }} animate:flip={{ duration: 300 }}>
 			<RecentTrack {track} />

@@ -34,11 +34,10 @@ export const getTimeAgo = (timestamp?: string): string => {
 
 export const getImageData = (track: Track) => {
   const images = track.image.filter((img) => img["#text"]).reverse();
-  const defaultImage = images[0]?.["#text"] || "";
   const srcset = images
     .map((img) => `${img["#text"]} ${sizeMap[img.size] || 64}w`)
     .join(", ");
-  return { defaultImage, srcset };
+  return { srcset };
 };
 
 export const getTrackId = (track: Track): string => {
