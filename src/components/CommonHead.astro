@@ -41,5 +41,13 @@ const { title } = Astro.props;
     })();
   </script>
 
+  <noscript>
+    <style>
+      .requires-js {
+        display: none;
+      }
+    </style>
+  </noscript>
+
   <ClientRouter />
 </head>

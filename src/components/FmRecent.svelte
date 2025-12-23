@@ -46,7 +46,11 @@
 	});
 </script>
 
-<div>
+<noscript>
+	<p class="text-neutral-500">Unavailable (needs JavaScript)</p>
+</noscript>
+
+<div class="requires-js">
 	{#if loading}
 		<p class="text-neutral-500">Loading...</p>
 	{:else if error}
