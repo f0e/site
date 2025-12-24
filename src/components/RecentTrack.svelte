@@ -26,18 +26,18 @@
 		</div>
 	{/if}
 
-	<div class="flex-1 min-w-0 leading-4">
+	<div class="flex-1">
 		<a href={track.url} target="_blank" rel="noopener noreferrer" class="hover:underline">
-			<p class="truncate">{track.name}</p>
+			<p>{track.name}</p>
 		</a>
 
-		<p class="truncate text-neutral-400">
+		<p class="text-neutral-400">
 			<a href={artist_url} target="_blank" rel="noopener noreferrer" class="hover:underline">
 				{artistName}
 			</a>
 		</p>
 
-		<p class="truncate text-neutral-500">
+		<p class="text-neutral-500">
 			{isNowPlaying ? 'Now playing' : track.date ? getTimeAgo(track.date.uts) : ''}
 		</p>
 	</div>
