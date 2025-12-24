@@ -5,7 +5,7 @@ import BaseLayout from "./BaseLayout.astro";
 
 import Main from "../components/Main.astro";
 
-const { title, isPost } = Astro.props;
+const { title, isPost = false } = Astro.props;
 ---
 
 <BaseLayout title={title}>

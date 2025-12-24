@@ -3,20 +3,27 @@ import "../styles/global.css";
 
 import Layout from "./Layout.astro";
 
-const { title, date } = Astro.props.content;
+export interface Props {
+  frontmatter: {
+    title: string;
+    date: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
 ---
 
-<Layout title={title} isPost={true}>
+<Layout title={frontmatter.title} isPost={true}>
   <a href="/" class="mb-4">
     <p class="mt-0">back</p>
   </a>
 
-  {title && <h1>{title}</h1>}
+  {frontmatter.title && <h1>{frontmatter.title}</h1>}
 
   {
-    date && (
+    frontmatter.date && (
       <p class="text-neutral-500">
-        {new Date(date).toLocaleDateString(undefined, {
+        {new Date(frontmatter.date).toLocaleDateString(undefined, {
           year: "numeric",
           month: "long",
           day: "numeric",

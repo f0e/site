@@ -1,25 +1,23 @@
 ---
-const postModules = import.meta.glob("../pages/posts/*.mdx");
-const posts = [];
+import type { MarkdownInstance } from "astro";
+import { type Props as PostProps } from "../layouts/PostLayout.astro";
 
-for (const path in postModules) {
-  const post = await postModules[path]();
-  posts.push({
-    url: path.replace("../pages", "").replace(".mdx", ""),
-    title: post.frontmatter.title || "no title",
-    date: post.frontmatter.date || "no date",
-  });
-}
+type PostPage = MarkdownInstance<PostProps["frontmatter"]>;
 
-posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+const posts = (
+  Object.values(
+    import.meta.glob("../pages/posts/**/*.mdx", { eager: true })
+  ) as PostPage[]
+).sort((a, b) => +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date));
 ---
 
 <ul>
   {
     posts.map((post) => (
       <li>
-        <a href={post.url}>{post.title}</a>
-        {post.date && ` — ${new Date(post.date).toLocaleDateString()}`}
+        <a href={post.url}>{post.frontmatter.title}</a>
+        {post.frontmatter.date &&
+          ` — ${new Date(post.frontmatter.date).toLocaleDateString()}`}
       </li>
     ))
   }
