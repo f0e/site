@@ -22,7 +22,6 @@ const customTransition = {
 };
 
 const { isPost } = Astro.props;
-const width = isPost ? "70ch" : "65ch"; // 65ch is prose default
 ---
 
 <Body>
@@ -30,8 +29,7 @@ const width = isPost ? "70ch" : "65ch"; // 65ch is prose default
 
   <main
     class={`prose dark:prose-invert md:p-8 sm:p-6 p-4
-    max-w-[min(100vw,${width})]`}
-    {/* prose doesnt take into account max width*/}
+    ${isPost ? "max-w-[70ch]!" : "max-w-[65ch]!" /* 65ch is prose default */}`}
     transition:animate={customTransition}
   >
     <slot />
