@@ -2,6 +2,8 @@
 import type { MarkdownInstance } from "astro";
 import { type Props as PostProps } from "../layouts/PostLayout.astro";
 
+import { dateToNiceString } from "../utils/dates";
+
 type PostPage = MarkdownInstance<PostProps["frontmatter"]>;
 
 const posts = (
@@ -17,7 +19,7 @@ const posts = (
       <li>
         <a href={post.url}>{post.frontmatter.title}</a>
         {post.frontmatter.date &&
-          ` — ${new Date(post.frontmatter.date).toLocaleDateString()}`}
+          ` — ${dateToNiceString(new Date(post.frontmatter.date))}`}
       </li>
     ))
   }

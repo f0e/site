@@ -3,6 +3,8 @@ import "../styles/global.css";
 
 import Layout from "./Layout.astro";
 
+import { dateToNiceString } from "../utils/dates";
+
 export interface Props {
   frontmatter: {
     title: string;
@@ -23,11 +25,7 @@ const { frontmatter } = Astro.props;
   {
     frontmatter.date && (
       <p class="text-neutral-500">
-        {new Date(frontmatter.date).toLocaleDateString(undefined, {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
+        {dateToNiceString(new Date(frontmatter.date))}
       </p>
     )
   }
