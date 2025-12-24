@@ -7,11 +7,11 @@ const animDuration = "0.4s";
 
 const anim = {
   old: {
-    name: "motion-blur-out",
+    name: "blur-out",
     duration: animDuration,
   },
   new: {
-    name: "motion-blur-in",
+    name: "blur-in",
     duration: animDuration,
   },
 };
@@ -49,14 +49,14 @@ const { isPost } = Astro.props;
     --blur-amount: 8px;
   }
 
-  @keyframes motion-blur-in {
+  @keyframes blur-in {
     from {
       opacity: 0;
       filter: blur(var(--blur-amount));
     }
   }
 
-  @keyframes motion-blur-out {
+  @keyframes blur-out {
     to {
       opacity: 0;
       filter: blur(var(--blur-amount));
