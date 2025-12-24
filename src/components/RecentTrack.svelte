@@ -27,9 +27,11 @@
 	{/if}
 
 	<div class="flex-1">
-		<a href={track.url} target="_blank" rel="noopener noreferrer" class="hover:underline">
-			<p>{track.name}</p>
-		</a>
+		<p>
+			<a href={track.url} target="_blank" rel="noopener noreferrer" class="hover:underline">
+				{track.name}
+			</a>
+		</p>
 
 		<p class="text-neutral-400">
 			<a href={artist_url} target="_blank" rel="noopener noreferrer" class="hover:underline">
