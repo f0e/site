@@ -33,13 +33,13 @@
 			</a>
 		</p>
 
-		<p class="text-neutral-400">
+		<p class="opacity-60">
 			<a href={artist_url} target="_blank" rel="noopener noreferrer" class="hover:underline">
 				{artistName}
 			</a>
 		</p>
 
-		<p class="text-neutral-500">
+		<p class="opacity-42">
 			{isNowPlaying ? 'Now playing' : track.date ? getTimeAgo(track.date.uts) : ''}
 		</p>
 	</div>
