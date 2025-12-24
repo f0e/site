@@ -52,7 +52,6 @@ const { isPost } = Astro.props;
   @keyframes motion-blur-in {
     from {
       opacity: 0;
-      transform: translateX(var(--anim-distance));
       filter: blur(var(--blur-amount));
     }
   }
@@ -60,7 +59,6 @@ const { isPost } = Astro.props;
   @keyframes motion-blur-out {
     to {
       opacity: 0;
-      transform: translateX(calc(-1 * var(--anim-distance)));
       filter: blur(var(--blur-amount));
     }
   }
