@@ -32,6 +32,8 @@ const { title } = Astro.props;
         elem.textContent = themeLabel;
       };
 
+      document.addEventListener("astro:after-swap", applyTheme);
+
       applyTheme();
 
       return {
