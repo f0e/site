@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { slide, fade } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
-	import RecentTrack from './RecentTrack.svelte';
-	import type { Track } from '../utils/lastfm';
-	import { fetchRecentTracks, getTrackId } from '../utils/lastfm';
+	import { onMount } from "svelte";
+	import { slide, fade } from "svelte/transition";
+	import { flip } from "svelte/animate";
+	import RecentTrack from "./RecentTrack.svelte";
+	import type { Track } from "../utils/lastfm";
+	import { fetchRecentTracks, getTrackId } from "../utils/lastfm";
 
 	export let username: string;
 	export let apiKey: string;
@@ -27,13 +27,15 @@
 		try {
 			const newTracks = await fetchRecentTracks(username, apiKey, limit);
 
-			tracks = newTracks.filter((track) => !track['@attr']?.nowplaying);
-			currentTrack = newTracks.find((track) => track['@attr']?.nowplaying);
+			tracks = newTracks.filter((track) => !track["@attr"]?.nowplaying);
+			currentTrack = newTracks.find(
+				(track) => track["@attr"]?.nowplaying,
+			);
 
 			loadedOnce = true;
 		} catch (e) {
-			error = e instanceof Error ? e.message : 'Unknown error';
-			console.error('Error fetching recent tracks:', e);
+			error = e instanceof Error ? e.message : "Unknown error";
+			console.error("Error fetching recent tracks:", e);
 		} finally {
 			loading = false;
 		}
