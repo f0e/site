@@ -13,6 +13,7 @@
     "@astrojs/svelte": "^7.2.4",
     "@tailwindcss/vite": "4.1.13",
     "astro": "5.13.7",
+    "giscus": "^1.6.0",
     "svelte": "^5.46.0",
     "tailwindcss": "4.1.13",
     "typescript": "^5.9.3"

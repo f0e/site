@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
 
+import Giscus from "../components/Giscus.astro";
+
 import Layout from "./Layout.astro";
 
 import { dateToNiceString } from "../utils/dates";
@@ -31,4 +33,8 @@ const { frontmatter } = Astro.props;
   }
 
   <slot />
+
+  <hr />
+
+  <Giscus />
 </Layout>

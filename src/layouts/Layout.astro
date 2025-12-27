@@ -8,8 +8,8 @@ import Main from "../components/Main.astro";
 const { title, isPost = false } = Astro.props;
 ---
 
-<BaseLayout title={title}>
-  <Main isPost={isPost}>
+<BaseLayout {title} {isPost}>
+  <Main {isPost}>
     <slot />
   </Main>
 </BaseLayout>
