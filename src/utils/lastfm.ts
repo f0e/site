@@ -54,7 +54,7 @@ export const fetchRecentTracks = async (
   );
 
   if (!response.ok) {
-    throw new Error("Failed to fetch tracks");
+    throw new Error("Failed to fetch recent tracks");
   }
 
   const data = await response.json();
@@ -71,7 +71,7 @@ export const fetchTopAlbums = async (
   );
 
   if (!response.ok) {
-    throw new Error("Failed to fetch albums");
+    throw new Error("Failed to fetch top albums");
   }
 
   const data = await response.json();
