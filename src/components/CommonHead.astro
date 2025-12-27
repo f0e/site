@@ -22,7 +22,7 @@ const { title } = Astro.props;
           window.matchMedia("(prefers-color-scheme: dark)").matches);
 
       const applyTheme = (doc = document) => {
-        doc.documentElement.dataset.theme = isDarkTheme() ? "dark" : "light";
+        doc.documentElement.classList.toggle("dark", isDarkTheme());
       };
 
       const updateLabel = () => {
