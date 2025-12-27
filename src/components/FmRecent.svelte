@@ -34,6 +34,7 @@
 
 			loadedOnce = true;
 		} catch (e) {
+			loadedOnce = false;
 			error = e instanceof Error ? e.message : "Unknown error";
 			console.error("Error fetching recent tracks:", e);
 		} finally {
