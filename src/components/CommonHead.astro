@@ -14,6 +14,16 @@ const { title, isPost = false } = Astro.props;
 
   <title>{`${title ? `${title} - ` : ""}tekno world`}</title>
 
+  <meta property="og:title" content={title ? `${title}` : "tekno world"} />
+  <meta property="og:url" content={Astro.url} />
+  {
+    isPost ? (
+      <meta property="og:type" content="article" />
+    ) : (
+      <meta property="og:type" content="website" />
+    )
+  }
+
   {
     isPost && (
       // stop giscus from making links to localhost
