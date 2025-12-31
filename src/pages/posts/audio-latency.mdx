@@ -82,13 +82,9 @@ If you want good latency, then whatever you use will need the ability to use an 
 
 Ideally you'd just use the TOSLINK optical out port on your motherboard and connect that to your DAC. Most high-end boards have these, but I've got a budget Micro ATX board which doesn't. There are a couple other ways of using optical audio if you're in the same boat.
 
-##### option 2: sound card
+##### option 2: HDMI audio extractor (my choice)
 
-You can buy pretty much any sound card and they'll come with an optical out port. I couldn't do this though since again, I've got a MATX mobo and my GPU covers up the other PCIE slot. It's also a bit more expensive than what I went with:
-
-##### option 3: HDMI audio extractor
-
-This is the option that should work for everyone. You can buy any cheap HDMI audio extractor (AFAIK no point to using a more expensive one, I bought the cheapest one with good reviews I could find off AliExpress) and connect it to your GPU, and it'll give you an optical out port which you can plug into your DAC/audio interface.
+This is the option that should work for everyone. You can buy any cheap HDMI audio extractor and connect it to your GPU, and it'll give you an optical out port which you can plug into your DAC/audio interface. As far as I know there's no point to buying a more expensive/premium one - I bought the cheapest one with good reviews I could find off AliExpress for $5 AUD.
 
 The downside to this though is you'll have an extra display show up in Windows which by default you can't hide, as removing the display also stops the audio output. However if you're on Windows 11 Pro 23h2 or newer, or a server edition, then [DisplayWakeUp](https://github.com/O-Robotic/DisplayWakeUp) will let you remove it.
 
@@ -96,6 +92,14 @@ The downside to this though is you'll have an extra display show up in Windows w
   data={Object.values(results).filter((result) => result.focus === "quality")}
   alt="Quality-focused results summary"
 />
+
+##### option 3: sound card
+
+You can also buy pretty much any sound card and they'll come with an optical out port, however there are a couple reasons why you should avoid this option if possible. Firstly, and most importantly, it takes up a PCIe slot, so you might not be able to fit one in your PC. I can't, as my GPU is covering up my second PCIe slot.
+
+Secondly, if you play games with kernel level anticheats, then they might block your sound card's drivers from loading, making them a dealbreaker.
+
+Finally, you likely can't use MSI mode when using them. See [#msi-mode](./audio-latency.mdx#msi-mode) for more details on why that matters.
 
 ### software
 
@@ -106,6 +110,14 @@ I'm not 100% on this, but I believe you want Windows to use its native audio dri
 Firstly, you'll want to stop Windows from installing its own updated audio drivers (probably some random Realtek version). You can find your own way of doing this, or run [valleyofdoom's registry script](https://github.com/valleyofdoom/PC-Tuning#117-merging-registry-options-permalink). This does some other stuff (all good, though you might not want to disable Defender), but importantly `disable driver installation via windows update` stops Windows from installing its own drivers. You might need to go into safe mode for it to run properly.
 
 You'll also need to get rid of your existing drivers. I used [Display Driver Uninstaller (DDU)](https://www.guru3d.com/download/display-driver-uninstaller-download/) for this - I removed both my audio (Realtek) drivers and my Nvidia drivers. I then reinstalled my Nvidia drivers, making sure to customise the installation and uncheck 'HD Audio Drivers'.
+
+As for DAC/audio interface drivers, you'll want to set the buffer size to the lowest amount you can. This is probably done via their software. If you're getting pops/crackles then bump it up, but keep it as low as possible for the least latency. Once you're done, remove the drivers. The drivers/software for some audio interfaces add a ton of latency, with Focusrite being a notable offender.
+
+#### misc
+
+##### msi mode
+
+You can also [enable MSI mode](https://forums.guru3d.com/threads/windows-line-based-vs-message-signaled-based-interrupts-msi-tool.378044) to reduce your system's [DPC and ISR calls](https://repo.zenk-security.com/Linux%20et%20systemes%20d.exploitations/Windows%20Internals%20Part%201_6th%20Edition.pdf#page=123) and potentially shave off a few milliseconds. From my testing I got around 2ms~ less latency with it on over 8 tests, but that's low enough that it might just be margin of error. This isn't required to have good latency, and is something I'm no expert on, but is widely recommended and is good practice.
 
 ## end
 
