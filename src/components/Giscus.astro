@@ -1,19 +1,4 @@
-<script
-  is:inline
-  src="https://giscus.app/client.js"
-  data-repo="f0e/site"
-  data-repo-id="MDEwOlJlcG9zaXRvcnkzOTQ0MDQzMjE="
-  data-category="posts"
-  data-category-id="DIC_kwDOF4Ih4c4C0R5y"
-  data-mapping="og:title"
-  data-strict="0"
-  data-reactions-enabled="0"
-  data-emit-metadata="0"
-  data-input-position="top"
-  data-theme="dark"
-  data-lang="en"
-  crossorigin="anonymous"
-  async></script>
+<div id="comments"></div>
 
 <script is:inline>
   // Function to get the current theme from the site
@@ -58,5 +43,42 @@
   document.addEventListener("DOMContentLoaded", () => {
     // Wait a bit for Giscus to fully load
     setTimeout(handleGiscusLoad, 1000);
+  });
+
+  function initialise() {
+    const container = document.getElementById("comments");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    const giscusAttributes = {
+      src: "https://giscus.app/client.js",
+      "data-repo": "f0e/site",
+      "data-repo-id": "MDEwOlJlcG9zaXRvcnkzOTQ0MDQzMjE=",
+      "data-category": "posts",
+      "data-category-id": "DIC_kwDOF4Ih4c4C0R5y",
+      "data-mapping": "og:title",
+      "data-strict": "0",
+      "data-reactions-enabled": "0",
+      "data-emit-metadata": "0",
+      "data-input-position": "top",
+      "data-theme": getCurrentTheme(),
+      "data-lang": "en",
+      crossorigin: "anonymous",
+    };
+
+    const giscusScript = document.createElement("script");
+    Object.entries(giscusAttributes).forEach(([key, value]) =>
+      giscusScript.setAttribute(key, value)
+    );
+    giscusScript.async = true;
+
+    container.appendChild(giscusScript);
+  }
+
+  initialise();
+
+  document.addEventListener("astro:after-swap", () => {
+    initialise();
   });
 </script>
