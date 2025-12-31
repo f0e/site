@@ -1,7 +1,7 @@
 ---
 layout: "@layouts/PostLayout.astro"
 title: fixing audio latency on Windows
-description: I recently watched techless's video on audio latency, which opened my eyes to how horrible audio latency is on Windows. This led me down a rabbit hole, and eventually I managed to drop my audio latency by over 40ms, with it going down from 75ms~ to around 35ms~ in tests. This is about as good as it can get from what I've seen. In this post I'll go over what I've changed in my setup to reduce latency, and the same steps should apply for anyone who has similar components. If you have a different DAC/audio interface/GPU/headphones etc there might be some difference, but for the most part the same steps should help you.
+description: I recently watched techless's video on audio latency, which opened my eyes to how horrible audio latency is on Windows. This led me down a 3-month-long rabbit hole of forums & Discord servers, but eventually I managed to drop my audio latency by over 40ms, with it going down from 75ms~ to around 35ms~ in tests. In this post I'll go over what I've changed in my setup to reduce latency, and the same steps should apply for anyone who has similar components. If you have a different DAC/audio interface/GPU/headphones etc there might be some difference, but for the most part the same steps should help you.
 date: 2025-12-31
 ---
 
@@ -41,7 +41,7 @@ export const results = {
 import * as Plot from "@observablehq/plot";
 import LatencyPlot from "@components/LatencyPlot";
 
-I recently watched [techless's video on audio latency](https://www.youtube.com/watch?v=okIpbu1tp_A), which opened my eyes to how horrible audio latency is on Windows. This led me down a rabbit hole, and eventually I managed to drop my audio latency by over {results.usb_dac_windows.latency - results.gpu_dp_monitor_windows.latency}ms, with it going down from {results.usb_dac_windows.latency}ms~ to around {results.gpu_dp_monitor_windows.latency}ms~ in tests. This is about as good as it can get from what I've seen.
+I recently watched [techless's video on audio latency](https://www.youtube.com/watch?v=okIpbu1tp_A), which opened my eyes to how horrible audio latency is on Windows. This led me down a 3-month-long rabbit hole of forums & Discord servers, but eventually I managed to drop my audio latency by over {results.usb_dac_windows.latency - results.gpu_dp_monitor_windows.latency}ms, with it going down from {results.usb_dac_windows.latency}ms~ to around {results.gpu_dp_monitor_windows.latency}ms~ in tests.
 
 <LatencyPlot
   data={Object.values(results)}
@@ -122,4 +122,4 @@ To sum stuff up:
   - USB connection = +30ms~, use optical
   - optical connection + non-Windows drivers = +50ms~, uninstall drivers, block Windows Update from installing any & don't install Nvidia's audio drivers
 
-There might be ways to bring latency down slightly more, but I haven't seen anyone get results much lower than this.
+There might be ways to bring latency down slightly more, but I haven't seen anyone get results lower than this.
