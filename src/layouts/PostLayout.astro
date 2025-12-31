@@ -38,7 +38,9 @@ const { frontmatter } = Astro.props;
     )
   }
 
-  <slot />
+  <article class="post">
+    <slot />
+  </article>
 
   <hr />
 

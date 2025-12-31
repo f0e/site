@@ -1,31 +1,25 @@
 ---
 import type { MarkdownInstance } from "astro";
-import { type Props as PostProps } from "@layouts/PostLayout.astro";
+import { getCollection } from "astro:content";
 
 import { dateToNiceString } from "@utils/dates";
+import { getPostLink } from "@utils/post";
 
-type PostPage = MarkdownInstance<PostProps["frontmatter"]>;
+const { filter = [] } = Astro.props;
 
-const { filter } = Astro.props;
+const posts = (await getCollection("posts"))
+  .filter((post) => !filter.includes(post.data.title))
+  .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
 
-const posts = (
-  Object.values(
-    import.meta.glob("@pages/posts/**/*.mdx", { eager: true })
-  ) as PostPage[]
-)
-  .filter((post) => !filter.includes(post.frontmatter.title))
-  .sort(
-    (a, b) => +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date)
-  );
+const site = Astro.url.origin;
 ---
 
 <ul>
   {
     posts.map((post) => (
       <li>
-        <a href={post.url}>{post.frontmatter.title}</a>
-        {post.frontmatter.date &&
-          ` — ${dateToNiceString(new Date(post.frontmatter.date))}`}
+        <a href={getPostLink(post, site)}>{post.data.title}</a>
+        {post.data.date && ` — ${dateToNiceString(new Date(post.data.date))}`}
       </li>
     ))
   }
