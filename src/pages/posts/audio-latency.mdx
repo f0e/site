@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: (wip) fixing audio latency on Windows
+title: fixing audio latency on Windows
 date: 2025-12-31
 ---
 
@@ -52,13 +52,13 @@ You can buy pretty much any sound card and they'll come with an optical out port
 
 This is the option that should work for everyone. You can buy any cheap HDMI audio extractor (afaik no point to using a more expensive one, i bought the cheapest one with good reviews i could find off aliexpress) and connect it to your GPU, and it'll give you an optical out port which you can plug into your DAC/audio interface.
 
-The downside to this though is you'll have an extra display show up in Windows which you can't hide, as removing the display also stops the audio output. (there's a [program someone made](https://github.com/O-Robotic/DisplayWakeUp) that can hide it, but it only works on server windows versions afaik. maybe it'll be possible in the future, lmk (TODO: TEST ON MY VERSION))
+The downside to this though is you'll have an extra display show up in Windows which by default you can't hide, as removing the display also stops the audio output. However if you're on Windows 11 Pro 23h2 or newer, or a server edition, then [DisplayWakeUp](https://github.com/O-Robotic/DisplayWakeUp) will let you remove it.
 
 ### software
 
 #### drivers
 
-I'm not 100% on this, but I believe (TODO: CHECK) you want Windows to use its native audio drivers if you want the best possible latency. As mentioned earlier, before I did this my optical & monitor's 3.5mm results were 90ms~, while my usb results were 75ms~. After fixing my drivers they went down to 45ms/35ms~.
+I'm not 100% on this, but I believe you want Windows to use its native audio drivers if you want the best possible latency. As mentioned earlier, before I did this my optical & monitor's 3.5mm results were 90ms~, while my usb results were 75ms~. After fixing my drivers they went down to 45ms/35ms~.
 
 Firstly, you'll want to stop Windows from installing its own updated audio drivers (probably some random RealTek version). You can find your own way of doing this, or run [valleyofdoom's registry script](https://github.com/valleyofdoom/PC-Tuning#117-merging-registry-options-permalink). This does some other stuff (all good), but importantly `disable driver installation via windows update` stops Windows from installing its own drivers. You might need to go into safe mode for it to run properly.
 
