@@ -4,47 +4,50 @@ title: fixing audio latency on Windows
 date: 2025-12-31
 ---
 
-export const results = [
-  {
+export const results = {
+  gpu_dp_monitor_windows: {
     label: "gpu → displayport → monitor 3.5mm out (windows drivers)",
     latency: 35,
     focus: "latency",
   },
-  {
+  gpu_dp_monitor_nvidia: {
     label: "gpu → displayport → monitor 3.5mm out (nvidia drivers)",
     latency: 100,
     focus: "latency",
   },
-  {
+  mobo_windows: {
     label: "mobo 3.5mm out (windows drivers)",
     latency: 35,
     focus: "latency",
   },
-  {
+  mobo_realtek: {
     label: "mobo 3.5mm out (realtek drivers)",
     latency: 80,
     focus: "latency",
   },
-  {
+  gpu_extractor_optical_dac_windows: {
     label: "gpu → hdmi extractor → optical → dac (windows drivers)",
     latency: 41,
     focus: "quality",
   },
-  { label: "usb → dac (windows drivers)", latency: 75, focus: "quality" },
-];
+  usb_dac_windows: {
+    label: "usb → dac (windows drivers)",
+    latency: 75,
+    focus: "quality",
+  },
+};
 
 import * as Plot from "@observablehq/plot";
-
 import LatencyPlot from "@components/LatencyPlot";
 
-I recently watched [techless's video on audio latency](https://www.youtube.com/watch?v=okIpbu1tp_A), which opened my eyes to how horrible audio latency is on Windows. This led me down a rabbit hole, and eventually I managed to drop my audio latency by over 50ms, with it going down from 75ms~ to around 35ms~ in tests. This is about as good as it can get from what I've seen.
+I recently watched [techless's video on audio latency](https://www.youtube.com/watch?v=okIpbu1tp_A), which opened my eyes to how horrible audio latency is on Windows. This led me down a rabbit hole, and eventually I managed to drop my audio latency by over {results.usb_dac_windows.latency - results.gpu_dp_monitor_windows.latency}ms, with it going down from {results.usb_dac_windows.latency}ms~ to around {results.gpu_dp_monitor_windows.latency}ms~ in tests. This is about as good as it can get from what I've seen.
 
-<LatencyPlot data={results} alt="All of my results from testing" />
+<LatencyPlot
+  data={Object.values(results)}
+  alt="All of my results from testing"
+/>
 
-In this post I'll go over what I've changed in my setup to reduce latency, and the
-same steps should apply for anyone who has similar components. If you have a different
-DAC/audio interface/GPU/headphones etc there might be some difference, but for the
-most part the same steps _should_ help you.
+In this post I'll go over what I've changed in my setup to reduce latency, and the same steps should apply for anyone who has similar components. If you have a different DAC/audio interface/GPU/headphones etc there might be some difference, but for the most part the same steps _should_ help you.
 
 Pretty much all the credit for the information in this post goes to the #audio channel in the [Latency & Gaming Discord](https://discord.com/invite/Nc6USePjA3). The people in there are far more knowledgeable than me, so if you have any questions or issues I suggest checking the pins & searching in there, as someone's probably already asked the same thing.
 
@@ -64,12 +67,12 @@ You also need to use a hardware-accelerated browser. [Thorium](https://thorium.r
 
 If you don't care about audio quality, as far as I know the best audio latency you can get will come connecting your headphones to the 3.5mm audio port on either your motherboard (only if it's [alc1220 or alc897](https://docs.google.com/spreadsheets/d/1NQHkDEcgDPm34Mns3C93K6SJoBnua-x9O-y_6hv8sPs/edit), i believe) or your monitor (most monitors, probably).
 
-For both these options you'll be using the DACs inside either your motherboard or monitor, which probably suck, but in my testing I got latency of 35ms~ via this method from both my motherboard (Gigabyte B650M GAMING PLUS WIFI) and monitor (Samsung G60SD).
+For both these options you'll be using the DACs inside either your motherboard or monitor, which probably suck, but in my testing I got latency of {results.gpu_dp_monitor_windows.latency}ms~ via this method from both my motherboard (Gigabyte B650M GAMING PLUS WIFI) and monitor (Samsung G60SD).
 
-If you do choose this method, you'll still need to follow [the drivers section of this guide](./audio-latency.mdx#drivers). On my monitor, latency was ~100ms before fixing drivers, and on my motherboard it was ~80ms.
+If you do choose this method, you'll still need to follow [the drivers section of this guide](./audio-latency.mdx#drivers). On my monitor, latency was {results.gpu_dp_monitor_nvidia.latency}ms~ before fixing drivers, and on my motherboard it was {results.mobo_realtek.latency}ms~.
 
 <LatencyPlot
-  data={results.filter((result) => result.focus === "latency")}
+  data={Object.values(results).filter((result) => result.focus === "latency")}
   alt="Latency-focused results summary"
 />
 
@@ -94,7 +97,7 @@ This is the option that should work for everyone. You can buy any cheap HDMI aud
 The downside to this though is you'll have an extra display show up in Windows which by default you can't hide, as removing the display also stops the audio output. However if you're on Windows 11 Pro 23h2 or newer, or a server edition, then [DisplayWakeUp](https://github.com/O-Robotic/DisplayWakeUp) will let you remove it.
 
 <LatencyPlot
-  data={results.filter((result) => result.focus === "quality")}
+  data={Object.values(results).filter((result) => result.focus === "quality")}
   alt="Quality-focused results summary"
 />
 
@@ -102,7 +105,7 @@ The downside to this though is you'll have an extra display show up in Windows w
 
 #### drivers
 
-I'm not 100% on this, but I believe you want Windows to use its native audio drivers if you want the best possible latency. As mentioned earlier, before I did this my optical & monitor's 3.5mm results were both above 90ms. After fixing my drivers they went down to 41ms/35ms~.
+I'm not 100% on this, but I believe you want Windows to use its native audio drivers if you want the best possible latency. As mentioned earlier, before I did this my optical & monitor's 3.5mm results were both above 90ms. After fixing my drivers they went down to {results.gpu_extractor_optical_dac_windows.latency}ms~ / {results.gpu_dp_monitor_windows.latency}ms~.
 
 Firstly, you'll want to stop Windows from installing its own updated audio drivers (probably some random RealTek version). You can find your own way of doing this, or run [valleyofdoom's registry script](https://github.com/valleyofdoom/PC-Tuning#117-merging-registry-options-permalink). This does some other stuff (all good), but importantly `disable driver installation via windows update` stops Windows from installing its own drivers. You might need to go into safe mode for it to run properly.
 
@@ -112,10 +115,10 @@ You'll also need to get rid of your existing drivers. I used [Display Driver Uni
 
 To sum stuff up:
 
-- using 3.5mm out on monitor/mobo = 35ms~
+- using 3.5mm out on monitor/mobo = {results.gpu_dp_monitor_windows.latency}ms~
   - Non-Windows drivers = +50ms~, uninstall drivers, block Windows Update from installing any & don't install Nvidia's audio drivers
-- using DAC/interface = 41ms~, depends on DAC
-  - USB connection = +30ms, use optical
+- using DAC/interface = {results.gpu_extractor_optical_dac_windows.latency}ms~, depends on DAC
+  - USB connection = +30ms~, use optical
   - optical connection + non-Windows drivers = +50ms~, uninstall drivers, block Windows Update from installing any & don't install Nvidia's audio drivers
 
 There might be ways to bring latency down slightly more, but I haven't seen anyone get results much lower than this.
