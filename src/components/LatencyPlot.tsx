@@ -8,25 +8,34 @@ interface LatencyPlotProps {
 }
 
 export default function LatencyPlot({ data, alt }: LatencyPlotProps) {
+  if (!data)
+    return <></>;
+
   return (
     <>
       <PlotFigure
         options={{
-          marginLeft: 300,
-          x: {
-            grid: true,
-            tickFormat: (ms: number) => `${ms}ms~`,
-            label: null,
-          },
-          y: {
-            label: null,
-          },
+          marginLeft: 350,
+          marginRight: 40,
           marks: [
             Plot.barX(data, {
               y: "label",
               x: "latency",
               sort: { y: "x" },
             }),
+            Plot.text(data, {
+              x: "latency",
+              y: "label",
+              text: (data) => data["latency"] + "ms",
+              textAnchor: "start",
+              dx: 5,
+              sort: { y: "x" }
+            }),
+            Plot.axisX({
+              anchor: "bottom", fontSize: "1.3em", label: null, ticks: []
+            }),
+            Plot.axisY({ anchor: "left", fontSize: "1.3em", label: null }),
+            Plot.gridX(),
           ],
         }}
       />
