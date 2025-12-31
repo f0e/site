@@ -54,7 +54,7 @@ The downside to this though is you'll have an extra display show up in Windows w
 
 #### drivers
 
-I'm not 100% on this, but I believe you want Windows to use its native audio drivers if you want the best possible latency. As mentioned earlier, before I did this my optical & monitor's 3.5mm results were 90ms~, while my usb results were 75ms~. After fixing my drivers they went down to 41ms/35ms~.
+I'm not 100% on this, but I believe you want Windows to use its native audio drivers if you want the best possible latency. As mentioned earlier, before I did this my optical & monitor's 3.5mm results were both above 90ms. After fixing my drivers they went down to 41ms/35ms~.
 
 Firstly, you'll want to stop Windows from installing its own updated audio drivers (probably some random RealTek version). You can find your own way of doing this, or run [valleyofdoom's registry script](https://github.com/valleyofdoom/PC-Tuning#117-merging-registry-options-permalink). This does some other stuff (all good), but importantly `disable driver installation via windows update` stops Windows from installing its own drivers. You might need to go into safe mode for it to run properly.
 
