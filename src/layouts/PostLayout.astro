@@ -11,13 +11,18 @@ export interface Props {
   frontmatter: {
     title: string;
     date: string;
+    description: string;
   };
 }
 
 const { frontmatter } = Astro.props;
 ---
 
-<Layout title={frontmatter.title} isPost={true}>
+<Layout
+  title={frontmatter.title}
+  isPost={true}
+  description={frontmatter.description}
+>
   <a href="/" class="mb-4">
     <p class="mt-0">back</p>
   </a>

@@ -3,13 +3,13 @@ import "@styles/global.css";
 
 import CommonHead from "@components/CommonHead.astro";
 
-const { title, isPost = false } = Astro.props;
+const { title, isPost = false, description = "" } = Astro.props;
 ---
 
 <!doctype html>
 <html transition:name="root" transition:animate="none" lang="en">
   <head>
-    <CommonHead {title} {isPost} />
+    <CommonHead {title} {isPost} {description} />
   </head>
 
   <slot />
