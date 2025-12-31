@@ -75,8 +75,8 @@
             class="absolute inset-0 bg-black opacity-0 group-hover:opacity-90 flex items-center justify-center p-4"
           >
             <div class="text-center text-white pointer-events-none">
-              <h3 class="font-semibold text-sm mb-1">{album.name}</h3>
-              <p class="text-xs text-neutral-300 mb-2">
+              <p class="font-semibold text-sm mb-1">{album.name}</p>
+              <p class="text-xs text-neutral-300 mb-1">
                 {album.artist.name}
               </p>
               <p class="text-xs text-neutral-400">
