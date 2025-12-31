@@ -65,7 +65,7 @@ You also need to use a hardware-accelerated browser. [Thorium](https://thorium.r
 
 #### i dont care about audio quality
 
-If you don't care about audio quality, as far as I know the best audio latency you can get will come connecting your headphones to the 3.5mm audio port on either your motherboard (only if it's [alc1220 or alc897](https://docs.google.com/spreadsheets/d/1NQHkDEcgDPm34Mns3C93K6SJoBnua-x9O-y_6hv8sPs/edit), i believe) or your monitor (most monitors, probably).
+If you don't care about audio quality, as far as I know the best audio latency you can get will come connecting your headphones to the 3.5mm audio port on either your motherboard (only if it's [alc1220 or alc897](https://docs.google.com/spreadsheets/d/1NQHkDEcgDPm34Mns3C93K6SJoBnua-x9O-y_6hv8sPs/edit), I believe) or your monitor (most monitors, probably).
 
 For both these options you'll be using the DACs inside either your motherboard or monitor, which probably suck, but in my testing I got latency of {results.gpu_dp_monitor_windows.latency}ms~ via this method from both my motherboard (Gigabyte B650M GAMING PLUS WIFI) and monitor (Samsung G60SD).
 
@@ -92,7 +92,7 @@ You can buy pretty much any sound card and they'll come with an optical out port
 
 ##### option 3: HDMI audio extractor
 
-This is the option that should work for everyone. You can buy any cheap HDMI audio extractor (afaik no point to using a more expensive one, i bought the cheapest one with good reviews i could find off aliexpress) and connect it to your GPU, and it'll give you an optical out port which you can plug into your DAC/audio interface.
+This is the option that should work for everyone. You can buy any cheap HDMI audio extractor (AFAIK no point to using a more expensive one, I bought the cheapest one with good reviews I could find off AliExpress) and connect it to your GPU, and it'll give you an optical out port which you can plug into your DAC/audio interface.
 
 The downside to this though is you'll have an extra display show up in Windows which by default you can't hide, as removing the display also stops the audio output. However if you're on Windows 11 Pro 23h2 or newer, or a server edition, then [DisplayWakeUp](https://github.com/O-Robotic/DisplayWakeUp) will let you remove it.
 
@@ -107,9 +107,9 @@ The downside to this though is you'll have an extra display show up in Windows w
 
 I'm not 100% on this, but I believe you want Windows to use its native audio drivers if you want the best possible latency. As mentioned earlier, before I did this my optical & monitor's 3.5mm results were both above 90ms. After fixing my drivers they went down to {results.gpu_extractor_optical_dac_windows.latency}ms~ / {results.gpu_dp_monitor_windows.latency}ms~.
 
-Firstly, you'll want to stop Windows from installing its own updated audio drivers (probably some random RealTek version). You can find your own way of doing this, or run [valleyofdoom's registry script](https://github.com/valleyofdoom/PC-Tuning#117-merging-registry-options-permalink). This does some other stuff (all good), but importantly `disable driver installation via windows update` stops Windows from installing its own drivers. You might need to go into safe mode for it to run properly.
+Firstly, you'll want to stop Windows from installing its own updated audio drivers (probably some random Realtek version). You can find your own way of doing this, or run [valleyofdoom's registry script](https://github.com/valleyofdoom/PC-Tuning#117-merging-registry-options-permalink). This does some other stuff (all good, though you might not want to disable Defender), but importantly `disable driver installation via windows update` stops Windows from installing its own drivers. You might need to go into safe mode for it to run properly.
 
-You'll also need to get rid of your existing drivers. I used [Display Driver Uninstaller (DDU)](https://www.guru3d.com/download/display-driver-uninstaller-download/) for this - I removed both my audio (RealTek) drivers and my Nvidia drivers. I then reinstalled my Nvidia drivers, making sure to customise the installation and uncheck 'HD Audio Drivers'.
+You'll also need to get rid of your existing drivers. I used [Display Driver Uninstaller (DDU)](https://www.guru3d.com/download/display-driver-uninstaller-download/) for this - I removed both my audio (Realtek) drivers and my Nvidia drivers. I then reinstalled my Nvidia drivers, making sure to customise the installation and uncheck 'HD Audio Drivers'.
 
 ## end
 
