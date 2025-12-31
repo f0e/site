@@ -1,12 +1,50 @@
 ---
-layout: ../../layouts/PostLayout.astro
+layout: "@layouts/PostLayout.astro"
 title: fixing audio latency on Windows
 date: 2025-12-31
 ---
 
+export const results = [
+  {
+    label: "gpu → displayport → monitor 3.5mm out (windows drivers)",
+    latency: 35,
+    focus: "latency",
+  },
+  {
+    label: "gpu → displayport → monitor 3.5mm out (nvidia drivers)",
+    latency: 100,
+    focus: "latency",
+  },
+  {
+    label: "mobo 3.5mm out (windows drivers)",
+    latency: 35,
+    focus: "latency",
+  },
+  {
+    label: "mobo 3.5mm out (realtek drivers)",
+    latency: 80,
+    focus: "latency",
+  },
+  {
+    label: "gpu → hdmi extractor → optical → dac (windows drivers)",
+    latency: 41,
+    focus: "quality",
+  },
+  { label: "usb → dac (windows drivers)", latency: 75, focus: "quality" },
+];
+
+import * as Plot from "@observablehq/plot";
+
+import LatencyPlot from "@components/LatencyPlot";
+
 I recently watched [techless's video on audio latency](https://www.youtube.com/watch?v=okIpbu1tp_A), which opened my eyes to how horrible audio latency is on Windows. This led me down a rabbit hole, and eventually I managed to drop my audio latency by over 50ms, with it going down from 75ms~ to around 35ms~ in tests. This is about as good as it can get from what I've seen.
 
-In this post I'll go over what I've changed in my setup to reduce latency, and the same steps should apply for anyone who has similar components. If you have a different DAC/audio interface/GPU/headphones etc there might be some difference, but for the most part the same steps _should_ help you.
+<LatencyPlot data={results} alt="All of my results from testing" />
+
+In this post I'll go over what I've changed in my setup to reduce latency, and the
+same steps should apply for anyone who has similar components. If you have a different
+DAC/audio interface/GPU/headphones etc there might be some difference, but for the
+most part the same steps _should_ help you.
 
 Pretty much all the credit for the information in this post goes to the #audio channel in the [Latency & Gaming Discord](https://discord.com/invite/Nc6USePjA3). The people in there are far more knowledgeable than me, so if you have any questions or issues I suggest checking the pins & searching in there, as someone's probably already asked the same thing.
 
@@ -30,6 +68,11 @@ For both these options you'll be using the DACs inside either your motherboard o
 
 If you do choose this method, you'll still need to follow [the drivers section of this guide](./audio-latency.mdx#drivers). On my monitor, latency was ~100ms before fixing drivers, and on my motherboard it was ~80ms.
 
+<LatencyPlot
+  data={results.filter((result) => result.focus === "latency")}
+  alt="Latency-focused results summary"
+/>
+
 #### i care about audio quality
 
 If you care about audio quality then I'm assuming you're using a DAC or an audio interface which you plug your headphones into. If you don't already have anything, I recommend getting a DAC rather than an audio interface, unless you really want a single device for both your headphones and microphone. This is because the audio outputs on interfaces are primarily designed for monitoring recordings rather than general use, so they'll typically sound worse than a dedicated DAC. I won't get into recommendations here, but I'm using a Topping DX3 Pro+.
@@ -49,6 +92,11 @@ You can buy pretty much any sound card and they'll come with an optical out port
 This is the option that should work for everyone. You can buy any cheap HDMI audio extractor (afaik no point to using a more expensive one, i bought the cheapest one with good reviews i could find off aliexpress) and connect it to your GPU, and it'll give you an optical out port which you can plug into your DAC/audio interface.
 
 The downside to this though is you'll have an extra display show up in Windows which by default you can't hide, as removing the display also stops the audio output. However if you're on Windows 11 Pro 23h2 or newer, or a server edition, then [DisplayWakeUp](https://github.com/O-Robotic/DisplayWakeUp) will let you remove it.
+
+<LatencyPlot
+  data={results.filter((result) => result.focus === "quality")}
+  alt="Quality-focused results summary"
+/>
 
 ### software
 
