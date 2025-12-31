@@ -1,0 +1,55 @@
+---
+layout: ../../layouts/PostLayout.astro
+title: (wip) fixing audio latency on Windows
+date: 2025-12-31
+---
+
+I recently watched [techless' video on audio latency](https://www.youtube.com/watch?v=okIpbu1tp_A), which opened my eyes to how horrible audio latency is on Windows. This led me down a rabbit hole, and eventually I managed to drop my audio latency from XXXXXX to 45ms~. This is about as good as it can get from what I've seen.
+
+Pretty much all the credit for the information in this post goes to the [#audio channel in the Latency & Gaming Discord](https://discord.com/invite/Nc6USePjA3).
+
+In this post I'll go over what I changed in my setup to reduce latency, and the same steps should apply for anyone who has similar components. If you have a different DAC/audio interface/GPU/headphones etc there might be some difference, but for the most part the same steps _should_ help you.
+
+## prerequisites
+
+For this 'guide' I'm assuming you're using a DAC or an audio interface which you plug your headphones into. If you're just using USB headphones or your headphones are plugged into a USB dongle then I'm not sure if there's much you can do. If they're connected to your motherboard's audio out, please stop doing that - the audio quality is horrible, but you can try plugging them into your monitor if it has an audio out port instead. This'll use audio from your GPU rather than your motherboard (which probably (TODO: CHECK) doesn't have great latency (TODO: ADD DETAILS) and should give you the same, if not better results than what I go through in this guide. You'll probably (TODO: CHECK) still need to follow [the drivers section of this guide too](./audio-latency.mdx#change-2-drivers).
+
+I recommend a DAC rather than an audio interface if you don't need a single device for both your headphones and microphone if you want the best audio, since the audio outs on interfaces are really designed for monitoring recordings rather than general use, so they'll sound worse typically than a dedicated DAC. I won't get into recommendations here, but I'm using a Topping DX3 Pro+.
+
+## testing latency
+
+Use [this online test](https://superpowered.com/webbrowserlatency) to see what your audio latency is. You'll want to use a 3.5mm mic for this, as USB/XLR mics will have additional latency, skewing the results. You'll still be able to see whether your latency improves from the changes you make, but your numbers will be higher than they should be.
+
+You'll also want to use a hardware accelerated browser. [Thorium](https://thorium.rocks/) is what I've seen recommended, and is what I used in my testing.
+
+I also fresh installed Windows (23h2) on a new partition for my testing to make sure there weren't any other variables messing with my results, but you probably don't need to bother with that.
+
+## change #1: usb -> optical
+
+The first change I made was switching my DAC from using a USB connection to my motherboard to using optical.
+
+### option 1: optical out on your motherboard
+
+Ideally you'd just use the Toslink optical out port on your motherboard, and connect that to your DAC. Most high-end boards have these, but I've got a budget Micro ATX board which doesn't. There are a couple other ways of using optical audio if you're in the same boat.
+
+### option 2: sound card
+
+You can buy pretty much any sound card and they'll come with an optical out port. I couldn't do this though since again, I've got a MATX mobo and my GPU covers up the other PCIE slot. It's also a bit more expensive than what I went with:
+
+### option 3: HDMI audio extractor
+
+This is the option that should work for everyone. You can buy any cheap HDMI audio extractor (afaik no point to using a more expensive one, i bought the cheapest one with good reviews i could find off aliexpress) and connect it to your GPU, and it'll give you an optical out port which you can plug into your DAC/audio interface.
+
+The downside to this though is you'll have an extra display show up in Windows which you can't hide, as removing the display also stops the audio output. (there's a [program someone made](https://github.com/O-Robotic/DisplayWakeUp) that can hide it, but it only works on server windows versions afaik. maybe it'll be possible in the future, lmk (TODO: TEST ON MY VERSION))
+
+## change #2: drivers
+
+I'm not 100% on this, but I believe (TODO: CHECK) you want Windows to use its native audio drivers if you want the best possible latency. Before I did this, my optical & monitor's 3.5mm results were 90ms~, while my usb results were 75ms~. After fixing my drivers they (TODO: CHECK 3.5mm HERE) went down to 45ms~.
+
+Firstly, you'll want to stop Windows from installing its own updated audio drivers (probably some random RealTek version). You can find your own way of doing this, or run [valleyofdoom's registry script](https://github.com/valleyofdoom/PC-Tuning#117-merging-registry-options-permalink). This does some other stuff (all good), but importantly `disable driver installation via windows update` stops Windows from installing its own drivers. You might need to go into safe mode for it to run properly.
+
+You'll also need to get rid of your existing drivers. I used [Display Driver Uninstaller (DDU)](https://www.guru3d.com/download/display-driver-uninstaller-download/) for this - I removed both my audio (RealTek) drivers and my Nvidia drivers. I then reinstalled my Nvidia drivers, making sure to customise the installation and uncheck 'HD Audio Drivers'.
+
+## end
+
+After you've made these changes your tested audio latency should go down to around 45ms~. As previously mentioned, this is about as good as it can get on Windows. There might be ways to bring it down slightly more, but I haven't seen anyone get results much lower than this.
