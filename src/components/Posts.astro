@@ -18,7 +18,7 @@ const site = Astro.url.origin;
   {
     posts.map((post) => (
       <li>
-        <a href={getPostLink(post, site)}>{post.data.title}</a>
+        <a href={getPostLink(post.id, site)}>{post.data.title}</a>
         {post.data.date && ` — ${dateToNiceString(new Date(post.data.date))}`}
       </li>
     ))

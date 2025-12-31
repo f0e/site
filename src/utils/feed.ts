@@ -34,7 +34,7 @@ export async function getFeedItems(context: APIContext) {
     const { Content } = await render(post);
     const rendered = await container.renderToString(Content);
     const content = getPostArticle(rendered);
-    const link = getPostLink(`/posts/${post.id}`, context.url.origin);
+    const link = getPostLink(post.id, context.url.origin);
     items.push({ ...post.data, link, content });
   }
 
