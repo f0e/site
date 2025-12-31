@@ -15,6 +15,7 @@ const { title, isPost = false } = Astro.props;
   <title>{`${title ? `${title} - ` : ""}tekno world`}</title>
 
   <meta property="og:title" content={title ? `${title}` : "tekno world"} />
+  <meta property="og:image" content="/favicon.png" />
   <meta property="og:url" content={Astro.url} />
   {
     isPost ? (
