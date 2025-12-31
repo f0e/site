@@ -43,11 +43,6 @@ import LatencyPlot from "@components/LatencyPlot";
 
 I recently watched [techless's video on audio latency](https://www.youtube.com/watch?v=okIpbu1tp_A), which opened my eyes to how horrible audio latency is on Windows. This led me down a 3-month-long rabbit hole of forums & Discord servers, but eventually I managed to drop my audio latency by over {results.usb_dac_windows.latency - results.gpu_dp_monitor_windows.latency}ms, with it going down from {results.usb_dac_windows.latency}ms~ to around {results.gpu_dp_monitor_windows.latency}ms~ in tests.
 
-<LatencyPlot
-  data={Object.values(results)}
-  alt="All of my results from testing"
-/>
-
 In this post I'll go over what I've changed in my setup to reduce latency, and the same steps should apply for anyone who has similar components. If you have a different DAC/audio interface/GPU/headphones etc there might be some difference, but for the most part the same steps _should_ help you.
 
 Pretty much all the credit for the information in this post goes to the #audio channel in the [Latency & Gaming Discord](https://discord.com/invite/Nc6USePjA3). The people in there are far more knowledgeable than me, so if you have any questions or issues I suggest checking the pins & searching in there, as someone's probably already asked the same thing.
@@ -115,6 +110,8 @@ You'll also need to get rid of your existing drivers. I used [Display Driver Uni
 ## end
 
 To sum stuff up:
+
+<LatencyPlot data={Object.values(results)} />
 
 - using 3.5mm out on monitor/mobo = {results.gpu_dp_monitor_windows.latency}ms~
   - Non-Windows drivers = +50ms~, uninstall drivers, block Windows Update from installing any & don't install Nvidia's audio drivers
