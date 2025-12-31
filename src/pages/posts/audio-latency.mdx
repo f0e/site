@@ -65,7 +65,7 @@ If you don't care about audio quality, as far as I know the best audio latency y
 
 For both these options you'll be using the DACs inside either your motherboard or monitor, which probably suck, but in my testing I got latency of {results.gpu_dp_monitor_windows.latency}ms~ via this method from both my motherboard (Gigabyte B650M GAMING PLUS WIFI) and monitor (Samsung G60SD).
 
-If you do choose this method, you'll still need to follow [the drivers section of this guide](./audio-latency.mdx#drivers). On my monitor, latency was {results.gpu_dp_monitor_nvidia.latency}ms~ before fixing drivers, and on my motherboard it was {results.mobo_realtek.latency}ms~.
+If you do choose this method, you'll still need to follow [the drivers section of this guide](#drivers). On my monitor, latency was {results.gpu_dp_monitor_nvidia.latency}ms~ before fixing drivers, and on my motherboard it was {results.mobo_realtek.latency}ms~.
 
 <LatencyPlot
   data={Object.values(results).filter((result) => result.focus === "latency")}
@@ -99,7 +99,7 @@ You can also buy pretty much any sound card and they'll come with an optical out
 
 Secondly, if you play games with kernel level anticheats, then they might block your sound card's drivers from loading, making them a dealbreaker.
 
-Finally, you likely can't use MSI mode when using them. See [#msi-mode](./audio-latency.mdx#msi-mode) for more details on why that matters.
+Finally, you likely can't use MSI mode when using them. See [#msi-mode](#msi-mode) for more details on why that matters.
 
 ### software
 
