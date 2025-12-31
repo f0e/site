@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import * as Plot from "@observablehq/plot";
 
 import PlotFigure from "@components/PlotFigure";
@@ -5,17 +6,26 @@ import PlotFigure from "@components/PlotFigure";
 interface LatencyPlotProps {
   data?: Plot.Data;
   alt?: string;
+  height: number;
 }
 
-export default function LatencyPlot({ data, alt }: LatencyPlotProps) {
+export default function LatencyPlot({ data, alt, height }: LatencyPlotProps) {
   if (!data) return <></>;
+
+  const fontConfig = {
+    monospace: true,
+    fontFamily: "Menlo, monospace",
+    fontSize: "1.15em",
+  };
 
   return (
     <>
       <PlotFigure
         options={{
-          marginLeft: 370,
-          marginRight: 40,
+          marginLeft: 280,
+          marginRight: 50,
+          height,
+          // marginBottom: 52,
           marks: [
             Plot.barX(data, {
               y: "label",
@@ -23,20 +33,30 @@ export default function LatencyPlot({ data, alt }: LatencyPlotProps) {
               sort: { y: "x" },
             }),
             Plot.text(data, {
+              ...fontConfig,
               x: "latency",
               y: "label",
-              text: (data) => data["latency"] + "ms",
+              text: (data) => data["latency"] + "ms~",
               textAnchor: "start",
               dx: 5,
               sort: { y: "x" },
             }),
             Plot.axisX({
+              ...fontConfig,
               anchor: "bottom",
-              fontSize: "1.3em",
+              tickFormat: (ms: number) => ms + "ms~",
+              // label: "latency (lower is better)",
+              // labelOffset: 43,
               label: null,
               ticks: [],
             }),
-            Plot.axisY({ anchor: "left", fontSize: "1.3em", label: null }),
+            Plot.axisY({
+              ...fontConfig,
+              anchor: "left",
+              label: null,
+              // lineWidth: 24,
+              lineHeight: 1.22,
+            }),
             Plot.gridX(),
           ],
         }}

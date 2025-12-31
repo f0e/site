@@ -7,32 +7,32 @@ date: 2025-12-31
 
 export const results = {
   gpu_dp_monitor_windows: {
-    label: "gpu → displayport → monitor 3.5mm out (windows drivers)",
+    label: "gpu → displayport → monitor 3.5mm out\n(windows drivers)",
     latency: 35,
     focus: "latency",
   },
   gpu_dp_monitor_nvidia: {
-    label: "gpu → displayport → monitor 3.5mm out (nvidia drivers)",
+    label: "gpu → displayport → monitor 3.5mm out\n(nvidia drivers)",
     latency: 100,
     focus: "latency",
   },
   mobo_windows: {
-    label: "mobo 3.5mm out (windows drivers)",
+    label: "mobo 3.5mm out\n(windows drivers)",
     latency: 35,
     focus: "latency",
   },
   mobo_realtek: {
-    label: "mobo 3.5mm out (realtek drivers)",
+    label: "mobo 3.5mm out\n(realtek drivers)",
     latency: 80,
     focus: "latency",
   },
   gpu_extractor_optical_dac_windows: {
-    label: "gpu → hdmi extractor → optical → dac (windows drivers)",
+    label: "gpu → hdmi extractor → optical → dac\n(windows drivers)",
     latency: 41,
     focus: "quality",
   },
   usb_dac_windows: {
-    label: "usb → dac (windows drivers)",
+    label: "usb → dac\n(windows drivers)",
     latency: 75,
     focus: "quality",
   },
@@ -70,6 +70,7 @@ If you do choose this method, you'll still need to follow [the drivers section o
 <LatencyPlot
   data={Object.values(results).filter((result) => result.focus === "latency")}
   alt="Latency-focused results summary"
+  height={210}
 />
 
 #### i care about audio quality
@@ -91,6 +92,7 @@ The downside to this though is you'll have an extra display show up in Windows w
 <LatencyPlot
   data={Object.values(results).filter((result) => result.focus === "quality")}
   alt="Quality-focused results summary"
+  height={130}
 />
 
 ##### option 3: sound card
@@ -123,7 +125,7 @@ You can also [enable MSI mode](https://forums.guru3d.com/threads/windows-line-ba
 
 To sum stuff up:
 
-<LatencyPlot data={Object.values(results)} />
+<LatencyPlot data={Object.values(results)} height={280} />
 
 - using 3.5mm out on monitor/mobo = {results.gpu_dp_monitor_windows.latency}ms~
   - Non-Windows drivers = +50ms~, uninstall drivers, block Windows Update from installing any & don't install Nvidia's audio drivers
