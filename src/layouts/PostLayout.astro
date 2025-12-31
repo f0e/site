@@ -6,6 +6,7 @@ import Giscus from "@components/Giscus.astro";
 import Layout from "./Layout.astro";
 
 import { dateToNiceString } from "@utils/dates";
+import Posts from "@components/Posts.astro";
 
 export interface Props {
   frontmatter: {
@@ -42,4 +43,10 @@ const { frontmatter } = Astro.props;
   <hr />
 
   <Giscus />
+
+  <hr />
+
+  <h2>more stuff</h2>
+
+  <Posts filter={[frontmatter.title]} />
 </Layout>
