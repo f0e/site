@@ -1,14 +1,14 @@
 ---
 import type { MarkdownInstance } from "astro";
-import { type Props as PostProps } from "../layouts/PostLayout.astro";
+import { type Props as PostProps } from "@layouts/PostLayout.astro";
 
-import { dateToNiceString } from "../utils/dates";
+import { dateToNiceString } from "@utils/dates";
 
 type PostPage = MarkdownInstance<PostProps["frontmatter"]>;
 
 const posts = (
   Object.values(
-    import.meta.glob("../pages/posts/**/*.mdx", { eager: true })
+    import.meta.glob("@pages/posts/**/*.mdx", { eager: true })
   ) as PostPage[]
 ).sort((a, b) => +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date));
 ---
