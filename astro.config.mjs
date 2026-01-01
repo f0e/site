@@ -20,4 +20,13 @@ export default defineConfig({
   },
 
   trailingSlash: "never",
+
+  markdown: {
+    shikiConfig: {
+      themes: {
+        light: "kanagawa-lotus",
+        dark: "kanagawa-dragon",
+      },
+    },
+  },
 });
