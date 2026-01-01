@@ -7,6 +7,7 @@ import { loadRenderers } from "astro:container";
 import { getCollection, render } from "astro:content";
 import * as cheerio from "cheerio";
 import { getPostLink } from "./post";
+import type { RSSFeedItem } from "@astrojs/rss";
 
 export function getPostArticle(html: string): string {
   const $ = cheerio.load(html);
@@ -14,14 +15,19 @@ export function getPostArticle(html: string): string {
   return article.html() || "";
 }
 
-export async function getFeedItems(context: APIContext) {
+export async function getFeedItems(
+  context: APIContext
+): Promise<RSSFeedItem[]> {
   const renderers = await loadRenderers([
     getMDXRenderer(),
     getSvelteRenderer(),
   ]);
   const container = await AstroContainer.create({ renderers });
+
   // @ts-ignore idk why its erroring https://github.com/withastro/astro/issues/11697#issuecomment-2340358119
   container.addServerRenderer({ renderer: reactRenderer });
+
+  // @note: maybe want this in the future?
   // container.addClientRenderer({
   //   name: "@astrojs/react",
   //   entrypoint: "@astrojs/react/client.js",
@@ -29,14 +35,17 @@ export async function getFeedItems(context: APIContext) {
 
   const posts = await getCollection("posts");
 
-  const items = [];
-  for (const post of posts) {
-    const { Content } = await render(post);
-    const rendered = await container.renderToString(Content);
-    const content = getPostArticle(rendered);
-    const link = getPostLink(post.id, context.url.origin);
-    items.push({ ...post.data, link, content });
-  }
+  const items: RSSFeedItem[] = await Promise.all(
+    posts.map(async (post) => {
+      const { Content } = await render(post);
+      const rendered = await container.renderToString(Content);
+
+      const content = getPostArticle(rendered);
+      const link = getPostLink(post.id, context.url.origin);
+
+      return { ...post.data, link, content };
+    })
+  );
 
   return items;
 }
