@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import * as Plot from "@observablehq/plot";
 
 import PlotFigure from "@components/PlotFigure";
