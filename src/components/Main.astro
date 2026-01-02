@@ -27,18 +27,6 @@ const { isPost } = Astro.props;
 const mainPad = "md:px-12 sm:px-8 px-6";
 ---
 
-<style>
-  .masky {
-    mask-image: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.9),
-      rgba(0, 0, 0, 0.7)
-    );
-    mask-repeat: no-repeat;
-    mask-size: cover;
-  }
-</style>
-
 <Body>
   {!isPost && <Circles client:load />}
 
