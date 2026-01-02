@@ -24,10 +24,6 @@ const { frontmatter } = Astro.props;
   isPost={true}
   description={frontmatter.description}
 >
-  <a href="/" class="mb-4">
-    <p class="mt-0">back</p>
-  </a>
-
   {frontmatter.title && <h1>{frontmatter.title}</h1>}
 
   {
