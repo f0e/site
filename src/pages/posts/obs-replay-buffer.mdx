@@ -5,6 +5,8 @@ description: By default, OBS's replay buffer is frustrating to use as a ShadowPl
 date: 2025-12-23
 ---
 
+import Expander from "@components/Expander.astro";
+
 By default, OBS's replay buffer is frustrating to use as a ShadowPlay/NVIDIA Share alternative. Thankfully, there are plugins available that emulate many aspects of ShadowPlay's behaviour, as well as adding other niceties.
 
 ## why even use OBS over ShadowPlay?
@@ -40,8 +42,7 @@ Provides a ton of functionality like:
 
 I've linked to my fork, which also allows for desktop capture (like ShadowPlay) and the use of a post-save script, to do stuff like running [unEQ](https://github.com/f0e/uneq) automatically.
 
-<details>
-  <summary>my post-save script</summary>
+<Expander summary="my post-save script">
 
 `uneq.bat`
 
@@ -90,7 +91,7 @@ done
 wait
 ```
 
-</details>
+</Expander>
 
 _There are other alternative plugins that do similar things to this one, but this is the best I've found so far. Whenever I try another option they always seem to work in weird and unintuitive ways, and oftentimes have questionable code quality._
 
