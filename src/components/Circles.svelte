@@ -43,8 +43,7 @@
 
     draw(ctx: CanvasRenderingContext2D) {
       const alpha = (1 - this.radius) * circleMaxAlpha;
-      const isDark = document.documentElement.classList.contains("dark");
-      ctx.strokeStyle = isDark ? "#fff" : "#000";
+      ctx.strokeStyle = "#fff";
       ctx.globalAlpha = alpha;
 
       ctx.beginPath();
@@ -102,5 +101,5 @@
 
 <canvas
   bind:this={canvas}
-  class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"
+  class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none mix-blend-exclusion"
 ></canvas>
