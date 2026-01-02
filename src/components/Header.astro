@@ -7,14 +7,16 @@ const { pad } = Astro.props;
 ---
 
 <header
-  class="sticky top-0
+  class="border-b border-black/20 dark:border-white/20"
+  {/*
+    sticky top-0
     z-50
     bg-[#f8f0eb]/92 dark:bg-black/85
     supports-[backdrop-filter]:bg-transparent
     supports-[backdrop-filter]:backdrop-blur-md
     supports-[backdrop-filter]:dark:mix-blend-plus-lighter
     supports-[backdrop-filter]:dark:backdrop-brightness-80
-    border-b border-black/20 dark:border-white/20"
+  */}
 >
   <div class={`${pad} py-4`}>
     <a href="/" class="flex items-center gap-2 no-underline masky">
