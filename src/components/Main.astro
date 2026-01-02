@@ -27,6 +27,8 @@ const customTransition = {
 };
 
 const { isPost } = Astro.props;
+
+const mainPad = "md:px-12 sm:px-8 px-6";
 ---
 
 <style>
@@ -51,7 +53,7 @@ const { isPost } = Astro.props;
     backdrop-brightness-80
     border-b-1 border-black/20 dark:border-white/20"
   >
-    <div class="md:px-8 sm:px-6 px-4 py-4">
+    <div class=`${mainPad} py-4`>
       <a href="/" class="flex items-center gap-2 no-underline masky">
         <Image src={favicon} alt="favicon" height="16" />
         <span>tekno world</span>
@@ -60,7 +62,7 @@ const { isPost } = Astro.props;
   </header>
 
   <main
-    class={`prose dark:prose-invert md:p-8 sm:p-6 p-4
+    class={`prose dark:prose-invert ${mainPad} py-8
     mx-auto
     ${
       isPost
