@@ -1,7 +1,7 @@
 <script lang="ts">
-  export const image: string = "";
-  export const alt: string = "";
-  export const className: string = "";
+  export let image: string = "";
+  export let alt: string = "";
+  export let className: string = "";
 
   interface Image {
     src: string;

@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { Album } from "@utils/lastfm";
-  import { fetchTopAlbums } from "@utils/lastfm";
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
+  import type { Album } from "@utils/lastfm";
+  import { fetchTopAlbums } from "@utils/lastfm";
 
   export let username: string;
   export let apiKey: string;
-  export const limit: number = 9;
+  export let limit: number = 9;
 
   let albums: Album[] = [];
   let error: string | null = null;

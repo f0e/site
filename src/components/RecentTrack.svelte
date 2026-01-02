@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getImageData, getTimeAgo, type Track } from "@utils/lastfm";
+  import { type Track, getTimeAgo, getImageData } from "@utils/lastfm";
   import FadingImage from "./FadingImage.svelte";
 
   export let track: Track;

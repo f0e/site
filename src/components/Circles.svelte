@@ -63,7 +63,7 @@
     }
   }
 
-  const circles = [new Circle()];
+  let circles = [new Circle()];
 
   onMount(() => {
     const ctx = canvas.getContext("2d");
@@ -73,8 +73,6 @@
     let lastTime: number | undefined;
 
     function render(time: number) {
-      if (!ctx) return;
-
       const delta = lastTime ? (time - lastTime) / 1000 : 1 / 60;
       lastTime = time;
       frame = requestAnimationFrame(render);
