@@ -1,4 +1,8 @@
 ---
+import type {
+  TransitionAnimationPair,
+  TransitionDirectionalAnimations,
+} from "astro";
 import Body from "./Body.astro";
 import Circles from "./Circles.svelte";
 import Header from "./Header.astro";
@@ -6,7 +10,7 @@ import ThemeSwitcher from "./ThemeSwitcher.astro";
 
 const animDuration = "0.4s";
 
-const anim = {
+const anim: TransitionAnimationPair = {
   old: {
     name: "blur-out",
     duration: animDuration,
@@ -17,7 +21,7 @@ const anim = {
   },
 };
 
-const customTransition = {
+const customTransition: TransitionDirectionalAnimations = {
   forwards: anim,
   backwards: anim,
 };
