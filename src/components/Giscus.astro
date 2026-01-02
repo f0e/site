@@ -12,7 +12,7 @@
     if (iframe?.contentWindow) {
       iframe.contentWindow.postMessage(
         { giscus: { setConfig: { theme: theme } } },
-        "https://giscus.app"
+        "https://giscus.app",
       );
     }
   }

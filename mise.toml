@@ -18,3 +18,9 @@ run = "bun run astro build"
 
 [tasks.preview]
 run = "bun run astro preview"
+
+[tasks.check]
+run = "bun run check"
+
+[tasks.fix]
+run = "bun run fix"

@@ -53,7 +53,7 @@
         this.y * canvas.height,
         this.radius * canvas.height,
         0,
-        2 * Math.PI
+        2 * Math.PI,
       );
       ctx.stroke();
     }

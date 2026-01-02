@@ -1,33 +1,33 @@
 <script lang="ts">
-import type { Album } from "@utils/lastfm";
-import { fetchTopAlbums } from "@utils/lastfm";
-import { onMount } from "svelte";
-import { fade } from "svelte/transition";
+  import type { Album } from "@utils/lastfm";
+  import { fetchTopAlbums } from "@utils/lastfm";
+  import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
 
-export let username: string;
-export let apiKey: string;
-export const limit: number = 9;
+  export let username: string;
+  export let apiKey: string;
+  export const limit: number = 9;
 
-let albums: Album[] = [];
-let error: string | null = null;
-let loading = true;
+  let albums: Album[] = [];
+  let error: string | null = null;
+  let loading = true;
 
-function getAlbumImage(album: Album): string | undefined {
-	return (
-		album.image.find((img) => img.size === "large")?.["#text"] ||
-		album.image[album.image.length - 1]?.["#text"]
-	);
-}
+  function getAlbumImage(album: Album): string | undefined {
+    return (
+      album.image.find((img) => img.size === "large")?.["#text"] ||
+      album.image[album.image.length - 1]?.["#text"]
+    );
+  }
 
-onMount(async () => {
-	try {
-		albums = await fetchTopAlbums(username, apiKey, limit);
-	} catch (e) {
-		error = e instanceof Error ? e.message : "Unknown error";
-	} finally {
-		loading = false;
-	}
-});
+  onMount(async () => {
+    try {
+      albums = await fetchTopAlbums(username, apiKey, limit);
+    } catch (e) {
+      error = e instanceof Error ? e.message : "Unknown error";
+    } finally {
+      loading = false;
+    }
+  });
 </script>
 
 <noscript>

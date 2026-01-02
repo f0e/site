@@ -3,21 +3,20 @@ import "package://github.com/jdx/hk/releases/download/v1.26.0/hk@1.26.0#/Builtin
 
 local linters = new Mapping<String, Step> {
     ["prettier"] {
-        glob = "*.js,*.ts,*.jsx,*.tsx,*.json,*.css,*.scss,*.html,*.svelte"
+        glob = "*.{js,ts,jsx,tsx,svelte,astro,json,css,scss,html}"
         check = "bun prettier --check {{files}}"
         fix = "bun prettier --write {{files}}"
     }
     ["eslint"] {
-        glob = "*.js,*.ts,*.jsx,*.tsx,*.svelte"
-        check = "bun eslint --ext .js,.ts,.jsx,.tsx --cache --cache-location ./.eslintcache {{files}}"
-        fix = "bun eslint --fix --ext .js,.ts,.jsx,.tsx --cache --cache-location ./.eslintcache {{files}}"
+        glob = "*.{js,ts,jsx,tsx,svelte,astro}"
+        check = "bun eslint --cache --cache-location .eslintcache {{files}}"
+        fix = "bun eslint --fix --cache --cache-location .eslintcache {{files}}"
     }
     ["pkl"] {
         glob = "*.pkl"
         check = "pkl eval {{files}} >/dev/null"
     }
     ["fix-missing-eol"] = new Step {
-        glob = "*.{py,md,txt,toml,ini,cfg,conf,sh,bash,js,ts,tsx,rs,go,java,css,scss,html,xml}"
         check = "hk util end-of-file-fixer {{ files }}"
         fix = "hk util end-of-file-fixer --fix {{ files }}"
     }
@@ -30,7 +29,6 @@ local linters = new Mapping<String, Step> {
         check = "hk util check-merge-conflict --assume-in-merge {{ files }}"
     }
     ["check-trailing-whitespace"] = new Step {
-        glob = "*.{py,md,txt,toml,ini,cfg,conf,sh,bash,yml,yaml,json,jsonc,js,ts,tsx,rs,go,java,css,scss,html,xml}"
         check = "hk util trailing-whitespace {{ files }}"
         fix = "hk util trailing-whitespace --fix {{ files }}"
     }

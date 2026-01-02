@@ -1,15 +1,15 @@
 <script lang="ts">
-import { getImageData, getTimeAgo, type Track } from "@utils/lastfm";
-import FadingImage from "./FadingImage.svelte";
+  import { getImageData, getTimeAgo, type Track } from "@utils/lastfm";
+  import FadingImage from "./FadingImage.svelte";
 
-export let track: Track;
+  export let track: Track;
 
-$: isNowPlaying = track["@attr"]?.nowplaying === "true";
-$: ({ srcset } = getImageData(track));
+  $: isNowPlaying = track["@attr"]?.nowplaying === "true";
+  $: ({ srcset } = getImageData(track));
 
-$: artistName = track.artist["#text"];
-$: albumName = track.album["#text"];
-$: artist_url = `https://www.last.fm/music/${artistName.replace(/ /g, "+")}`;
+  $: artistName = track.artist["#text"];
+  $: albumName = track.album["#text"];
+  $: artist_url = `https://www.last.fm/music/${artistName.replace(/ /g, "+")}`;
 </script>
 
 <div

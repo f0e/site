@@ -44,26 +44,26 @@ const { title, isPost = false, description = "" } = Astro.props;
           globalThis.matchMedia("(prefers-color-scheme: dark)").matches);
 
       const applyTheme = (document_ = document) => {
-    document_.documentElement.classList.toggle("dark", isDarkTheme());
+        document_.documentElement.classList.toggle("dark", isDarkTheme());
 
         document.dispatchEvent(
           new CustomEvent("theme-change", {
             detail: {
               theme: isDarkTheme() ? "dark" : "light",
             },
-          })
+          }),
         );
       };
 
       const updateLabel = () => {
         const element = document.querySelector("#theme-toggle");
-    if (!element) return;
-    const themeLabel = localStorage.theme ?? "system";
-    element.textContent = themeLabel;
+        if (!element) return;
+        const themeLabel = localStorage.theme ?? "system";
+        element.textContent = themeLabel;
       };
 
       document.addEventListener("astro:before-swap", (event) =>
-        applyTheme(event.newDocument)
+        applyTheme(event.newDocument),
       );
 
       applyTheme();

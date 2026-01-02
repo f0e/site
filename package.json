@@ -7,13 +7,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "check:format": "prettier . --check",
-    "check:lint": "eslint --max-warnings 0 --cache --cache-location ./node_modules/.cache/eslint/",
-    "check:knip": "knip",
-    "check": "bun run check:format && bun run check:lint && bun run check:knip",
-    "fix:format": "prettier . --write",
-    "fix:lint": "eslint --fix --max-warnings 0 --cache --cache-location ./node_modules/.cache/eslint/",
-    "fix": "bun run fix:format && bun run fix:lint"
+    "check": "hk check --all",
+    "fix": "hk check --all --fix"
   },
   "dependencies": {
     "@astrojs/mdx": "4.3.5",
@@ -51,6 +46,8 @@
     "eslint-plugin-unicorn": "^62.0.0",
     "knip": "^5.79.0",
     "prettier": "^3.7.4",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-svelte": "^3.4.1",
     "typescript-eslint": "^8.51.0"
   }
 }
