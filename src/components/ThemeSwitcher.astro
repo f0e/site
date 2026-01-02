@@ -1,6 +1,6 @@
 <div id="theme-switcher" class="requires-js">
   <span class="opacity-50">theme: </span>
-  <button id="theme-toggle" class="underline cursor-pointer">system</button>
+  <button id="theme-toggle" class="cursor-pointer underline">system</button>
 </div>
 
 <script>
@@ -14,7 +14,7 @@
   < /script>
   */
   function init() {
-    window.ThemeProvider.updateLabel();
+    globalThis.ThemeProvider.updateLabel();
     registerEvents();
   }
 
@@ -27,12 +27,12 @@
       localStorage.theme = theme;
     }
 
-    window.ThemeProvider.applyTheme();
-    window.ThemeProvider.updateLabel();
+    globalThis.ThemeProvider.applyTheme();
+    globalThis.ThemeProvider.updateLabel();
   }
 
   function registerEvents() {
-    const themeToggle = document.getElementById("theme-toggle");
+    const themeToggle = document.querySelector("#theme-toggle");
 
     themeToggle?.addEventListener("click", () => {
       const current = localStorage.theme || "system";

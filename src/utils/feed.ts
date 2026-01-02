@@ -1,22 +1,22 @@
+import { loadRenderers } from "astro:container";
+import { getCollection, render } from "astro:content";
 import { getContainerRenderer as getMDXRenderer } from "@astrojs/mdx";
 import reactRenderer from "@astrojs/react/server.js";
+import type { RSSFeedItem } from "@astrojs/rss";
 import { getContainerRenderer as getSvelteRenderer } from "@astrojs/svelte";
 import type { APIContext } from "astro";
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
-import { loadRenderers } from "astro:container";
-import { getCollection, render } from "astro:content";
 import * as cheerio from "cheerio";
 import { getPostLink } from "./post";
-import type { RSSFeedItem } from "@astrojs/rss";
 
-export function getPostArticle(html: string): string {
+function getPostArticle(html: string): string {
   const $ = cheerio.load(html);
   const article = $("article.post").first();
   return article.html() || "";
 }
 
 export async function getFeedItems(
-  context: APIContext
+  context: APIContext,
 ): Promise<RSSFeedItem[]> {
   const renderers = await loadRenderers([
     getMDXRenderer(),
@@ -24,7 +24,7 @@ export async function getFeedItems(
   ]);
   const container = await AstroContainer.create({ renderers });
 
-  // @ts-ignore idk why its erroring https://github.com/withastro/astro/issues/11697#issuecomment-2340358119
+  // @ts-expect-error idk why its erroring https://github.com/withastro/astro/issues/11697#issuecomment-2340358119
   container.addServerRenderer({ renderer: reactRenderer });
 
   // @note: maybe want this in the future?
@@ -44,7 +44,7 @@ export async function getFeedItems(
       const link = getPostLink(post.id, context.url.origin);
 
       return { ...post.data, link, content };
-    })
+    }),
   );
 
   return items;

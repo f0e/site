@@ -37,14 +37,14 @@ const { title, isPost = false, description = "" } = Astro.props;
   }
 
   <script is:inline>
-    window.ThemeProvider = (() => {
+    globalThis.ThemeProvider = (() => {
       const isDarkTheme = () =>
         localStorage.theme === "dark" ||
         (!("theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches);
+          globalThis.matchMedia("(prefers-color-scheme: dark)").matches);
 
-      const applyTheme = (doc = document) => {
-        doc.documentElement.classList.toggle("dark", isDarkTheme());
+      const applyTheme = (document_ = document) => {
+    document_.documentElement.classList.toggle("dark", isDarkTheme());
 
         document.dispatchEvent(
           new CustomEvent("theme-change", {
@@ -56,10 +56,10 @@ const { title, isPost = false, description = "" } = Astro.props;
       };
 
       const updateLabel = () => {
-        const elem = document.getElementById("theme-toggle");
-        if (!elem) return;
-        const themeLabel = localStorage.theme ?? "system";
-        elem.textContent = themeLabel;
+        const element = document.querySelector("#theme-toggle");
+    if (!element) return;
+    const themeLabel = localStorage.theme ?? "system";
+    element.textContent = themeLabel;
       };
 
       document.addEventListener("astro:before-swap", (event) =>

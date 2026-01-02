@@ -3,7 +3,7 @@
 <script is:inline>
   // Function to get the current theme from the site
   function getCurrentTheme() {
-    return window.ThemeProvider.isDarkTheme() ? "dark" : "light";
+    return globalThis.ThemeProvider.isDarkTheme() ? "dark" : "light";
   }
 
   // Function to update Giscus theme
@@ -24,8 +24,8 @@
   }
 
   // Listen for the site's theme change events
-  document.addEventListener("theme-change", (e) => {
-    updateGiscusTheme(e.detail.theme);
+  document.addEventListener("theme-change", (event) => {
+    updateGiscusTheme(event.detail.theme);
   });
 
   // Listen for Giscus ready event to set initial theme
@@ -46,7 +46,7 @@
   });
 
   function initialise() {
-    const container = document.getElementById("comments");
+    const container = document.querySelector("#comments");
     if (!container) return;
 
     container.innerHTML = "";
@@ -68,12 +68,11 @@
     };
 
     const giscusScript = document.createElement("script");
-    Object.entries(giscusAttributes).forEach(([key, value]) =>
-      giscusScript.setAttribute(key, value)
-    );
+    for (const [key, value] of Object.entries(giscusAttributes))
+      giscusScript.setAttribute(key, value);
     giscusScript.async = true;
 
-    container.appendChild(giscusScript);
+    container.append(giscusScript);
   }
 
   initialise();

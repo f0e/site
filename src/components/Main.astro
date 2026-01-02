@@ -33,13 +33,17 @@ const mainPad = "md:px-12 sm:px-8 px-6";
   <Header pad={mainPad} />
 
   <main
-    class={`prose dark:prose-invert ${mainPad} py-8
-    mx-auto
-    ${
-      isPost
-        ? "w-[min(100%,70ch)]! max-w-[70ch]!"
-        : "w-[min(100%,65ch)]! max-w-[65ch]!" /* 65ch is prose default */
-    }`}
+    class={`
+      prose
+      dark:prose-invert
+      ${mainPad}
+      mx-auto py-8
+      ${
+        isPost
+          ? "w-[min(100%,70ch)]! max-w-[70ch]!"
+          : "w-[min(100%,65ch)]! max-w-[65ch]!" /* 65ch is prose default */
+      }
+    `}
     transition:animate={customTransition}
   >
     <slot />
@@ -79,7 +83,7 @@ const mainPad = "md:px-12 sm:px-8 px-6";
 
   const images = document.querySelectorAll(".fade-in");
 
-  images.forEach((img) => {
+  for (const img of images) {
     if (!img.complete || img.naturalWidth === 0) {
       // not already loaded, fade in
       img.classList.add("opacity-0");
@@ -89,5 +93,5 @@ const mainPad = "md:px-12 sm:px-8 px-6";
         img.classList.remove("opacity-0");
       });
     }
-  });
+  }
 </script>

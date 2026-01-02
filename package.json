@@ -1,12 +1,19 @@
 {
   "name": "tekno.sh",
-  "type": "module",
   "version": "0.0.1",
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check:format": "prettier . --check",
+    "check:lint": "eslint --max-warnings 0 --cache --cache-location ./node_modules/.cache/eslint/",
+    "check:knip": "knip",
+    "check": "bun run check:format && bun run check:lint && bun run check:knip",
+    "fix:format": "prettier . --write",
+    "fix:lint": "eslint --fix --max-warnings 0 --cache --cache-location ./node_modules/.cache/eslint/",
+    "fix": "bun run fix:format && bun run fix:lint"
   },
   "dependencies": {
     "@astrojs/mdx": "4.3.5",
@@ -19,6 +26,7 @@
     "@types/react-dom": "^19.2.3",
     "astro": "5.13.7",
     "cheerio": "^1.1.2",
+    "eslint": "^9.39.2",
     "giscus": "^1.6.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
@@ -27,6 +35,22 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "0.5.16"
+    "@eslint/json": "^0.14.0",
+    "@eslint/markdown": "^7.5.1",
+    "@tailwindcss/typography": "0.5.16",
+    "@types/eslint-plugin-jsx-a11y": "^6.10.1",
+    "@typescript-eslint/parser": "^8.51.0",
+    "astro-eslint-parser": "^1.2.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^1.5.0",
+    "eslint-plugin-better-tailwindcss": "^3.8.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-mdx": "^3.6.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-svelte": "^3.13.1",
+    "eslint-plugin-unicorn": "^62.0.0",
+    "knip": "^5.79.0",
+    "prettier": "^3.7.4",
+    "typescript-eslint": "^8.51.0"
   }
 }

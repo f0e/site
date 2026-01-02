@@ -1,14 +1,17 @@
+import PlotFigure from "@components/PlotFigure";
 import * as Plot from "@observablehq/plot";
 
-import PlotFigure from "@components/PlotFigure";
-
-interface LatencyPlotProps {
+interface LatencyPlotProperties {
   data?: Plot.Data;
   alt?: string;
   height: number;
 }
 
-export default function LatencyPlot({ data, alt, height }: LatencyPlotProps) {
+export default function LatencyPlot({
+  data,
+  alt,
+  height,
+}: LatencyPlotProperties) {
   if (!data) return <></>;
 
   const fontConfig = {
@@ -61,7 +64,7 @@ export default function LatencyPlot({ data, alt, height }: LatencyPlotProps) {
         }}
       />
 
-      {alt && <p className="text-center text-xs opacity-50 mt-2">{alt}</p>}
+      {alt && <p className="mt-2 text-center text-xs opacity-50">{alt}</p>}
     </>
   );
 }

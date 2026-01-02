@@ -1,38 +1,38 @@
 <script lang="ts">
-	export let image: string = '';
-	export let alt: string = '';
-	export let className: string = '';
+export const image: string = "";
+export const alt: string = "";
+export const className: string = "";
 
-	interface Image {
-		src: string;
-		opacity: number;
+interface Image {
+	src: string;
+	opacity: number;
+}
+
+let images: Image[] = [];
+
+function setImageLoaded(image: Image) {
+	if (images.indexOf(image) != images.length - 1) {
+		return;
 	}
 
-	let images: Image[] = [];
+	image.opacity = 1;
+	images = images; // trigger re-render
+}
 
-	function setImageLoaded(image: Image) {
-		if (images.indexOf(image) != images.length - 1) {
-			return;
+function removeImage(image: Image) {
+	images = images.filter((img) => img !== image);
+}
+
+$: if (image) {
+	if (images.at(-1)?.src !== image) {
+		for (const image of images) {
+			image.opacity = 0;
 		}
 
-		image.opacity = 1;
+		images.push({ src: image, opacity: 0 });
 		images = images; // trigger re-render
 	}
-
-	function removeImage(image: Image) {
-		images = images.filter((img) => img !== image);
-	}
-
-	$: if (image) {
-		if (images.at(-1)?.src !== image) {
-			for (const image of images) {
-				image.opacity = 0;
-			}
-
-			images.push({ src: image, opacity: 0 });
-			images = images; // trigger re-render
-		}
-	}
+}
 </script>
 
 <div class="relative">

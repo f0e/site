@@ -1,7 +1,5 @@
 ---
-import type { MarkdownInstance } from "astro";
 import { getCollection } from "astro:content";
-
 import { dateToNiceString } from "@utils/dates";
 import { getPostLink } from "@utils/post";
 
@@ -9,7 +7,7 @@ const { filter = [] } = Astro.props;
 
 const posts = (await getCollection("posts"))
   .filter((post) => !filter.includes(post.data.title))
-  .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
+  .toSorted((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
 
 const site = Astro.url.origin;
 ---

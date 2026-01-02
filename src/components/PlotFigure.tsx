@@ -5,11 +5,11 @@ import { createElement as h } from "react";
 // For client-side rendering, see https://codesandbox.io/s/plot-react-csr-p4cr7t?file=/src/PlotFigure.jsx
 // Based on https://github.com/observablehq/plot/blob/main/docs/components/PlotRender.js
 
-interface PlotFigureProps {
+interface PlotFigureProperties {
   options?: PlotOptions;
 }
 
-export default function PlotFigure({ options }: PlotFigureProps) {
+export default function PlotFigure({ options }: PlotFigureProperties) {
   return Plot.plot({ ...options, document: new Document() }).toHyperScript();
 }
 
@@ -91,8 +91,8 @@ class Element {
   }
   append(...children) {
     for (const child of children) {
-      this.appendChild(
-        child?.ownerDocument ? child : this.ownerDocument.createTextNode(child)
+      this.append(
+        child?.ownerDocument ? child : this.ownerDocument.createTextNode(child),
       );
     }
   }
@@ -102,12 +102,13 @@ class Element {
     return child;
   }
   insertBefore(child, after) {
-    if (after == null) {
+    if (after == undefined) {
       this.children.push(child);
     } else {
-      const i = this.children.indexOf(after);
-      if (i < 0) throw new Error("insertBefore reference node not found");
-      this.children.splice(i, 0, child);
+      const index = this.children.indexOf(after);
+      if (index === -1)
+        throw new Error("insertBefore reference node not found");
+      this.children.splice(index, 0, child);
     }
     child.parentNode = this;
     return child;
@@ -131,7 +132,7 @@ class Element {
     return h(
       this.tagName,
       this.attributes,
-      this.children.map((c) => c.toHyperScript())
+      this.children.map((c) => c.toHyperScript()),
     );
   }
 }
