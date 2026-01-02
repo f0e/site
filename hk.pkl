@@ -1,0 +1,54 @@
+amends "package://github.com/jdx/hk/releases/download/v1.26.0/hk@1.26.0#/Config.pkl"
+import "package://github.com/jdx/hk/releases/download/v1.26.0/hk@1.26.0#/Builtins.pkl"
+
+local linters = new Mapping<String, Step> {
+    ["prettier"] {
+        glob = "*.js,*.ts,*.jsx,*.tsx,*.json,*.css,*.scss,*.html,*.svelte"
+        check = "bun prettier --check {{files}}"
+        fix = "bun prettier --write {{files}}"
+    }
+    ["eslint"] {
+        glob = "*.js,*.ts,*.jsx,*.tsx,*.svelte"
+        check = "bun eslint --ext .js,.ts,.jsx,.tsx --cache --cache-location ./.eslintcache {{files}}"
+        fix = "bun eslint --fix --ext .js,.ts,.jsx,.tsx --cache --cache-location ./.eslintcache {{files}}"
+    }
+    ["pkl"] {
+        glob = "*.pkl"
+        check = "pkl eval {{files}} >/dev/null"
+    }
+    ["fix-missing-eol"] = new Step {
+        glob = "*.{py,md,txt,toml,ini,cfg,conf,sh,bash,js,ts,tsx,rs,go,java,css,scss,html,xml}"
+        check = "hk util end-of-file-fixer {{ files }}"
+        fix = "hk util end-of-file-fixer --fix {{ files }}"
+    }
+    ["check-added-large-files"] = new Step {
+        glob = "*"
+        check = "hk util check-added-large-files --maxkb 10000 {{ files }}"
+    }
+    ["check-merge-conflict-markers"] = new Step {
+        glob = "*"
+        check = "hk util check-merge-conflict --assume-in-merge {{ files }}"
+    }
+    ["check-trailing-whitespace"] = new Step {
+        glob = "*.{py,md,txt,toml,ini,cfg,conf,sh,bash,yml,yaml,json,jsonc,js,ts,tsx,rs,go,java,css,scss,html,xml}"
+        check = "hk util trailing-whitespace {{ files }}"
+        fix = "hk util trailing-whitespace --fix {{ files }}"
+    }
+}
+
+hooks {
+    ["pre-commit"] {
+        fix = true
+        stash = "patch-file"
+        steps = linters
+    }
+
+    ["fix"] {
+        fix = true
+        steps = linters
+    }
+
+    ["check"] {
+        steps = linters
+    }
+}
