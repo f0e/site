@@ -1,12 +1,8 @@
 ---
-import { Image } from "astro:assets";
-
 import Body from "./Body.astro";
 import Circles from "./Circles.svelte";
-import Container from "./Container.astro";
+import Header from "./Header.astro";
 import ThemeSwitcher from "./ThemeSwitcher.astro";
-
-import favicon from "@public/favicon.png";
 
 const animDuration = "0.4s";
 
@@ -46,20 +42,7 @@ const mainPad = "md:px-12 sm:px-8 px-6";
 <Body>
   {!isPost && <Circles client:load />}
 
-  <header
-    class="sticky top-0
-    z-50
-    backdrop-blur-md
-    backdrop-brightness-80
-    border-b-1 border-black/20 dark:border-white/20"
-  >
-    <div class=`${mainPad} py-4`>
-      <a href="/" class="flex items-center gap-2 no-underline masky">
-        <Image src={favicon} alt="favicon" height="16" />
-        <span>tekno world</span>
-      </a>
-    </div>
-  </header>
+  <Header pad={mainPad} />
 
   <main
     class={`prose dark:prose-invert ${mainPad} py-8

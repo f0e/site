@@ -1,0 +1,22 @@
+---
+import { Image } from "astro:assets";
+
+import favicon from "@public/favicon.png";
+
+const { pad } = Astro.props;
+---
+
+<header
+  class="sticky top-0
+    z-50
+    backdrop-blur-md
+    dark:backdrop-brightness-80
+    border-b-1 border-black/20 dark:border-white/20"
+>
+  <div class=`${pad} py-4`>
+    <a href="/" class="flex items-center gap-2 no-underline masky">
+      <Image src={favicon} alt="favicon" height="16" />
+      <span>tekno world</span>
+    </a>
+  </div>
+</header>
