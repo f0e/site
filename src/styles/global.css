@@ -5,13 +5,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {
-  font-family: "Ioskeley Mono";
-  src: url("/IoskeleyMono-Regular.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "consolas-local";
-  src: url("/consolas.woff") format("woff");
+  font-family: "Saira Semi Condensed";
+  src: url("/fonts/Saira Semi Condensed.woff2") format("woff2");
 }
 
 @theme {

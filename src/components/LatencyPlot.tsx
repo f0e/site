@@ -16,8 +16,9 @@ export default function LatencyPlot({
 
   const fontConfig = {
     monospace: true,
-    fontFamily: "Menlo, monospace",
-    fontSize: "1.15em",
+    fontFamily: "Saira Semi Condensed, system-ui, sans-serif",
+    fontSize: "1.6em",
+    lineHeight: 1.3,
   };
 
   return (
@@ -25,7 +26,7 @@ export default function LatencyPlot({
       <PlotFigure
         options={{
           marginLeft: 280,
-          marginRight: 50,
+          marginRight: 60,
           height,
           // marginBottom: 52,
           marks: [
@@ -33,6 +34,8 @@ export default function LatencyPlot({
               y: "label",
               x: "latency",
               sort: { y: "x" },
+              insetTop: 5,
+              insetBottom: 5,
             }),
             Plot.text(data, {
               ...fontConfig,
@@ -57,7 +60,6 @@ export default function LatencyPlot({
               anchor: "left",
               label: null,
               // lineWidth: 24,
-              lineHeight: 1.22,
             }),
             Plot.gridX(),
           ],
