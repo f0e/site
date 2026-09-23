@@ -4,7 +4,8 @@ import "@styles/global.css";
 import Main from "@components/Main.astro";
 import BaseLayout from "./BaseLayout.astro";
 
-const { title, isPost = false, description = "" } = Astro.props;
+const { frontmatter } = Astro.props;
+const { title, isPost = false, description = "" } = frontmatter ?? Astro.props;
 ---
 
 <BaseLayout {title} {isPost} {description}>
