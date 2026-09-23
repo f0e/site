@@ -1,10 +1,10 @@
-<div id="theme-switcher" class="requires-js">
+<theme-switcher class="requires-js block">
   <span class="opacity-50">theme: </span>
-  <button id="theme-toggle" class="cursor-pointer underline">system</button>
-</div>
+  <button class="cursor-pointer underline">system</button>
+</theme-switcher>
 
 <script>
-  /* i'd love to not have to do this, and to inline updateLabel so it updates instantly,
+  /* i'd love to set the label in an inline script so it updates instantly,
   but that apparently stops the rest of the site from rendering??
 
   for proof, add this above, reload lots of times and watch the layout shift:
@@ -13,42 +13,29 @@
     // literally nothing
   < /script>
   */
-  function init() {
-    globalThis.ThemeProvider.updateLabel();
-    registerEvents();
-  }
+  const themes = ["system", "light", "dark"];
 
-  type Theme = "system" | "dark" | "light";
+  class ThemeSwitcher extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector("button")!;
 
-  function setTheme(theme: Theme) {
-    if (theme == "system") {
-      localStorage.removeItem("theme");
-    } else {
-      localStorage.theme = theme;
+      const render = () =>
+        (button.textContent = localStorage.theme ?? "system");
+
+      button.addEventListener("click", () => {
+        const current = localStorage.theme ?? "system";
+        const next = themes[(themes.indexOf(current) + 1) % themes.length];
+
+        if (next === "system") localStorage.removeItem("theme");
+        else localStorage.theme = next;
+
+        globalThis.ThemeProvider.applyTheme();
+        render();
+      });
+
+      render();
     }
-
-    globalThis.ThemeProvider.applyTheme();
-    globalThis.ThemeProvider.updateLabel();
   }
 
-  function registerEvents() {
-    const themeToggle = document.querySelector("#theme-toggle");
-
-    themeToggle?.addEventListener("click", () => {
-      const current = localStorage.theme || "system";
-      const next =
-        current === "system"
-          ? "light"
-          : current === "light"
-            ? "dark"
-            : "system";
-      setTheme(next);
-    });
-  }
-
-  document.addEventListener("astro:after-swap", () => {
-    init();
-  });
-
-  init();
+  customElements.define("theme-switcher", ThemeSwitcher);
 </script>
