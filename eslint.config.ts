@@ -25,6 +25,13 @@ export default defineConfig(
     language: "json/json",
     extends: [json.configs.recommended],
   },
+  {
+    files: ["**/*.jsonc"],
+    plugins: { json },
+    language: "json/jsonc",
+    languageOptions: { allowTrailingCommas: true },
+    extends: [json.configs.recommended],
+  },
 
   // javascript/typescript
   {

@@ -1,5 +1,4 @@
 [tools]
-biome = "latest"
 bun = "latest"
 hk = "v1.26.0"
 node = "latest"

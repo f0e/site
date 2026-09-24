@@ -4,8 +4,8 @@
     "unifiedjs.vscode-mdx",
     "bradlc.vscode-tailwindcss",
     "svelte.svelte-vscode",
-    "biomejs.biome",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint"
   ],
   "unwantedRecommendations": []
 }
