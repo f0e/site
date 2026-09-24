@@ -81,7 +81,7 @@ class Element {
   }
   append(...children) {
     for (const child of children) {
-      this.append(
+      this.appendChild(
         child?.ownerDocument ? child : this.ownerDocument.createTextNode(child),
       );
     }
