@@ -2,6 +2,8 @@
 import { ClientRouter } from "astro:transitions";
 
 const { title, isPost = false, description = "" } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
 ---
 
 <meta charset="UTF-8" />
@@ -16,7 +18,9 @@ const { title, isPost = false, description = "" } = Astro.props;
 
 <meta property="og:title" content={title ? `${title}` : "tekno world"} />
 <meta property="og:image" content={new URL("/favicon.png", Astro.url)} />
-<meta property="og:url" content={Astro.url} />
+<link rel="canonical" href={canonicalUrl} />
+
+<meta property="og:url" content={canonicalUrl} />
 <meta property="og:site_name" content="tekno world" />
 <meta property="og:type" content={isPost ? "article" : "website"} />
 <meta
