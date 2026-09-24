@@ -3,6 +3,7 @@
 @plugin '@tailwindcss/typography';
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant js (&:where(.js, .js *));
 
 @font-face {
   font-family: "Saira Semi Condensed";
