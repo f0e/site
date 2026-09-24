@@ -112,6 +112,27 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
     event.newDocument.documentElement.classList.add("js"),
   );
 </script>
+<script is:inline>
+  // workaround for an astro bug: the client router sets scroll restoration to manual and restores scroll
+  // itself after load, which paints a frame at the top on refresh. hand it back to the browser on unload
+  // so it restores natively. astro's router never resets it (as of astro 7.3.4 / main in 2026-09):
+  // https://github.com/withastro/astro/blob/main/packages/astro/src/transitions/router.ts
+  //
+  // same approach other routers use:
+  // - react router's <ScrollRestoration /> (pagehide -> auto, persisted pageshow -> manual):
+  //   https://github.com/remix-run/react-router/blob/2d9827bc09bc562647553f8abf026823e3bfd9dd/packages/react-router/lib/dom/lib.tsx#L3084-L3113
+  // - sveltekit (beforeunload -> auto, "adopted from nuxt"):
+  //   https://github.com/sveltejs/kit/blob/c6f9a786e1ccd3b6dc91d97637299ffe8283fc2f/packages/kit/src/runtime/client/client.js#L2657-L2689
+  // - nuxt 2 (beforeunload -> auto, load -> manual):
+  //   https://github.com/nuxt/nuxt/blob/e265ef39d4e96b13a2cb3475731a3d794a18429c/packages/vue-app/template/router.scrollBehavior.js#L7-L23
+  addEventListener("pagehide", () => {
+    history.scrollRestoration = "auto";
+  });
+  // back on manual when restored from bfcache, otherwise back/forward would jump before the router swaps
+  addEventListener("pageshow", (event) => {
+    if (event.persisted) history.scrollRestoration = "manual";
+  });
+</script>
 <noscript>
   <style>
     .requires-js {
