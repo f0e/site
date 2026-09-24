@@ -20,14 +20,13 @@
       const button = this.querySelector("button")!;
 
       const render = () =>
-        (button.textContent = localStorage.theme ?? "system");
+        (button.textContent = globalThis.ThemeProvider.getPreference());
 
       button.addEventListener("click", () => {
-        const current = localStorage.theme ?? "system";
+        const current = globalThis.ThemeProvider.getPreference();
         const next = themes[(themes.indexOf(current) + 1) % themes.length];
 
-        if (next === "system") localStorage.removeItem("theme");
-        else localStorage.theme = next;
+        globalThis.ThemeProvider.setPreference(next);
 
         globalThis.ThemeProvider.applyTheme();
         render();

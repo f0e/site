@@ -49,10 +49,34 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
 
 <script is:inline>
   globalThis.ThemeProvider = (() => {
-    const isDarkTheme = () =>
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        globalThis.matchMedia("(prefers-color-scheme: dark)").matches);
+    // localStorage can throw (blocked site data, some private modes), so fall
+    // back to an in-memory preference for the session
+    let memoryPreference = "system";
+
+    const getPreference = () => {
+      try {
+        return localStorage.theme ?? "system";
+      } catch {
+        return memoryPreference;
+      }
+    };
+
+    const setPreference = (preference) => {
+      memoryPreference = preference;
+      try {
+        if (preference === "system") localStorage.removeItem("theme");
+        else localStorage.theme = preference;
+      } catch {}
+    };
+
+    const isDarkTheme = () => {
+      const preference = getPreference();
+      return (
+        preference === "dark" ||
+        (preference === "system" &&
+          globalThis.matchMedia("(prefers-color-scheme: dark)").matches)
+      );
+    };
 
     const applyTheme = (document_ = document) => {
       document_.documentElement.classList.toggle("dark", isDarkTheme());
@@ -73,6 +97,8 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
     applyTheme();
 
     return {
+      getPreference,
+      setPreference,
       isDarkTheme,
       applyTheme,
     };
