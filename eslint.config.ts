@@ -1,11 +1,12 @@
 import globals from "globals";
 import path from "path";
 import { defineConfig } from "eslint/config";
+import { fixupConfigRules } from "@eslint/compat";
 import js from "@eslint/js";
 import json from "@eslint/json";
 import prettier from "eslint-config-prettier";
 import astro from "eslint-plugin-astro";
-import astroParser from "astro-eslint-parser";
+import * as astroParser from "astro-eslint-parser";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import svelte from "eslint-plugin-svelte";
@@ -47,11 +48,13 @@ export default defineConfig(
       },
     },
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
-    plugins: { reactHooks, react },
     extends: [
       reactHooks.configs.flat["recommended-latest"],
-      react.configs.flat.recommended,
-      react.configs.flat["jsx-runtime"],
+      // eslint-plugin-react still uses context apis that were removed in eslint 10
+      ...fixupConfigRules([
+        react.configs.flat.recommended,
+        react.configs.flat["jsx-runtime"],
+      ]),
     ],
   },
 
@@ -74,7 +77,7 @@ export default defineConfig(
       ...tailwind.configs["recommended-warn"].rules,
       // enable all recommended rules to report an error
       ...tailwind.configs["recommended-error"].rules,
-      "better-tailwindcss/no-unregistered-classes": [
+      "better-tailwindcss/no-unknown-classes": [
         "warn",
         {
           ignore: ["post", "masky", "requires-js", "fade-in"],

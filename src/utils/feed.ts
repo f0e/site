@@ -24,7 +24,6 @@ export async function getFeedItems(
   ]);
   const container = await AstroContainer.create({ renderers });
 
-  // @ts-expect-error idk why its erroring https://github.com/withastro/astro/issues/11697#issuecomment-2340358119
   container.addServerRenderer({ renderer: reactRenderer });
 
   // @note: maybe want this in the future?

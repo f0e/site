@@ -18,19 +18,20 @@ const { pad } = Astro.props;
   }
 </style>
 
-<header
-  class={`
-    border-b border-black/20 bg-[#f8f0eb]/92
-    dark:border-white/20 dark:bg-black/85
-  `}
-  {/*
+{/*
+  sticky header, disabled for now:
     sticky top-0
     z-50
     supports-[backdrop-filter]:bg-transparent
     supports-[backdrop-filter]:dark:mix-blend-plus-lighter
     supports-[backdrop-filter]:backdrop-blur-md
     supports-[backdrop-filter]:dark:backdrop-brightness-80
-  */}
+*/}
+<header
+  class={`
+    border-b border-black/20 bg-[#f8f0eb]/92
+    dark:border-white/20 dark:bg-black/85
+  `}
 >
   <div
     class={`

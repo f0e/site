@@ -26,13 +26,11 @@ const { frontmatter } = Astro.props;
 >
   {frontmatter.title && <h1>{frontmatter.title}</h1>}
 
-  {
-    frontmatter.date && (
-      <p class="text-neutral-500">
-        {dateToNiceString(new Date(frontmatter.date))}
-      </p>
-    )
-  }
+  {frontmatter.date && (
+    <p class="text-neutral-500">
+      {dateToNiceString(new Date(frontmatter.date))}
+    </p>
+  )}
 
   <article class="post">
     <slot />

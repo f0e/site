@@ -27,15 +27,13 @@ const { title, isPost = false, description = "" } = Astro.props;
 
   <meta name="theme-color" content="#9e50bf" />
 
-  {
-    isPost && (
-      // stop giscus from making links to localhost
-      <meta
-        name="giscus:backlink"
-        content={`https://tekno.sh${Astro.url.pathname}`}
-      />
-    )
-  }
+  {isPost && (
+    // stop giscus from making links to localhost
+    <meta
+      name="giscus:backlink"
+      content={`https://tekno.sh${Astro.url.pathname}`}
+    />
+  )}
 
   <script is:inline>
     globalThis.ThemeProvider = (() => {
@@ -68,7 +66,6 @@ const { title, isPost = false, description = "" } = Astro.props;
       };
     })();
   </script>
-
   <noscript>
     <style>
       .requires-js {

@@ -1,0 +1,138 @@
+import { createElement as h } from "react";
+
+// minimal fake dom so plot can render on the server, kept as plain js like upstream:
+// https://github.com/observablehq/plot/blob/main/docs/components/PlotRender.js
+
+class Window {
+  constructor(document) {
+    this.Event = globalThis.Event;
+    this.document = document;
+  }
+}
+
+export class Document {
+  constructor() {
+    this.documentElement = new Element(this, "html");
+    this.defaultView = new Window(this);
+  }
+  createElementNS(namespace, tagName) {
+    return new Element(this, tagName);
+  }
+  createElement(tagName) {
+    return new Element(this, tagName);
+  }
+  createTextNode(value) {
+    return new TextNode(this, value);
+  }
+  querySelector() {
+    return null;
+  }
+  querySelectorAll() {
+    return [];
+  }
+}
+
+class Style {
+  static empty = new Style();
+  setProperty() {}
+  removeProperty() {}
+}
+
+class Element {
+  constructor(ownerDocument, tagName) {
+    this.ownerDocument = ownerDocument;
+    this.tagName = tagName;
+    this.attributes = {};
+    this.children = [];
+    this.parentNode = null;
+  }
+  setAttribute(name, value) {
+    this.attributes[name] = String(value);
+  }
+  setAttributeNS(namespace, name, value) {
+    this.setAttribute(name, value);
+  }
+  getAttribute(name) {
+    return this.attributes[name];
+  }
+  getAttributeNS(name) {
+    return this.getAttribute(name);
+  }
+  hasAttribute(name) {
+    return name in this.attributes;
+  }
+  hasAttributeNS(name) {
+    return this.hasAttribute(name);
+  }
+  removeAttribute(name) {
+    delete this.attributes[name];
+  }
+  removeAttributeNS(namespace, name) {
+    this.removeAttribute(name);
+  }
+  addEventListener() {
+    // ignored; interaction needs real DOM
+  }
+  removeEventListener() {
+    // ignored; interaction needs real DOM
+  }
+  dispatchEvent() {
+    // ignored; interaction needs real DOM
+  }
+  append(...children) {
+    for (const child of children) {
+      this.append(
+        child?.ownerDocument ? child : this.ownerDocument.createTextNode(child),
+      );
+    }
+  }
+  appendChild(child) {
+    this.children.push(child);
+    child.parentNode = this;
+    return child;
+  }
+  insertBefore(child, after) {
+    if (after == undefined) {
+      this.children.push(child);
+    } else {
+      const index = this.children.indexOf(after);
+      if (index === -1)
+        throw new Error("insertBefore reference node not found");
+      this.children.splice(index, 0, child);
+    }
+    child.parentNode = this;
+    return child;
+  }
+  querySelector() {
+    return null;
+  }
+  querySelectorAll() {
+    return [];
+  }
+  set textContent(value) {
+    this.children = [this.ownerDocument.createTextNode(value)];
+  }
+  set style(value) {
+    this.attributes.style = value;
+  }
+  get style() {
+    return Style.empty;
+  }
+  toHyperScript() {
+    return h(
+      this.tagName,
+      this.attributes,
+      this.children.map((c) => c.toHyperScript()),
+    );
+  }
+}
+
+class TextNode {
+  constructor(ownerDocument, nodeValue) {
+    this.ownerDocument = ownerDocument;
+    this.nodeValue = String(nodeValue);
+  }
+  toHyperScript() {
+    return this.nodeValue;
+  }
+}
