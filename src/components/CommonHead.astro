@@ -4,82 +4,80 @@ import { ClientRouter } from "astro:transitions";
 const { title, isPost = false, description = "" } = Astro.props;
 ---
 
-<head>
-  <meta charset="UTF-8" />
+<meta charset="UTF-8" />
 
-  <meta name="viewport" content="width=device-width" />
+<meta name="viewport" content="width=device-width" />
 
-  <link rel="icon" href="/favicon.png" />
-  <link rel="apple-touch-icon" href="/favicon.png" />
-  <meta name="generator" content={Astro.generator} />
+<link rel="icon" href="/favicon.png" />
+<link rel="apple-touch-icon" href="/favicon.png" />
+<meta name="generator" content={Astro.generator} />
 
-  <title>{`${title ? `${title} - ` : ""}tekno world`}</title>
+<title>{`${title ? `${title} - ` : ""}tekno world`}</title>
 
-  <meta property="og:title" content={title ? `${title}` : "tekno world"} />
-  <meta property="og:image" content={new URL("/favicon.png", Astro.url)} />
-  <meta property="og:url" content={Astro.url} />
-  <meta property="og:site_name" content="tekno world" />
-  <meta property="og:type" content={isPost ? "article" : "website"} />
+<meta property="og:title" content={title ? `${title}` : "tekno world"} />
+<meta property="og:image" content={new URL("/favicon.png", Astro.url)} />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:site_name" content="tekno world" />
+<meta property="og:type" content={isPost ? "article" : "website"} />
+<meta
+  property="og:description"
+  content={isPost ? description || "" : "welcome"}
+/>
+
+<meta name="theme-color" content="#9e50bf" />
+
+{isPost && (
+  // stop giscus from making links to localhost
   <meta
-    property="og:description"
-    content={isPost ? description || "" : "welcome"}
+    name="giscus:backlink"
+    content={`https://tekno.sh${Astro.url.pathname}`}
   />
+)}
 
-  <meta name="theme-color" content="#9e50bf" />
+<script is:inline>
+  globalThis.ThemeProvider = (() => {
+    const isDarkTheme = () =>
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        globalThis.matchMedia("(prefers-color-scheme: dark)").matches);
 
-  {isPost && (
-    // stop giscus from making links to localhost
-    <meta
-      name="giscus:backlink"
-      content={`https://tekno.sh${Astro.url.pathname}`}
-    />
-  )}
+    const applyTheme = (document_ = document) => {
+      document_.documentElement.classList.toggle("dark", isDarkTheme());
 
-  <script is:inline>
-    globalThis.ThemeProvider = (() => {
-      const isDarkTheme = () =>
-        localStorage.theme === "dark" ||
-        (!("theme" in localStorage) &&
-          globalThis.matchMedia("(prefers-color-scheme: dark)").matches);
-
-      const applyTheme = (document_ = document) => {
-        document_.documentElement.classList.toggle("dark", isDarkTheme());
-
-        document.dispatchEvent(
-          new CustomEvent("theme-change", {
-            detail: {
-              theme: isDarkTheme() ? "dark" : "light",
-            },
-          }),
-        );
-      };
-
-      document.addEventListener("astro:before-swap", (event) =>
-        applyTheme(event.newDocument),
+      document.dispatchEvent(
+        new CustomEvent("theme-change", {
+          detail: {
+            theme: isDarkTheme() ? "dark" : "light",
+          },
+        }),
       );
+    };
 
-      applyTheme();
-
-      return {
-        isDarkTheme,
-        applyTheme,
-      };
-    })();
-  </script>
-  <script is:inline>
-    // lets css know js is running (the js: variant)
-    document.documentElement.classList.add("js");
     document.addEventListener("astro:before-swap", (event) =>
-      event.newDocument.documentElement.classList.add("js"),
+      applyTheme(event.newDocument),
     );
-  </script>
-  <noscript>
-    <style>
-      .requires-js {
-        display: none;
-      }
-    </style>
-  </noscript>
 
-  <ClientRouter />
-</head>
+    applyTheme();
+
+    return {
+      isDarkTheme,
+      applyTheme,
+    };
+  })();
+</script>
+<script is:inline>
+  // lets css know js is running (the js: variant)
+  document.documentElement.classList.add("js");
+  document.addEventListener("astro:before-swap", (event) =>
+    event.newDocument.documentElement.classList.add("js"),
+  );
+</script>
+<noscript>
+  <style>
+    .requires-js {
+      display: none;
+    }
+  </style>
+</noscript>
+
+<ClientRouter />
