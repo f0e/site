@@ -122,7 +122,8 @@ class Element {
     return h(
       this.tagName,
       this.attributes,
-      this.children.map((c) => c.toHyperScript()),
+      // spread so react sees static children rather than a list needing keys
+      ...this.children.map((c) => c.toHyperScript()),
     );
   }
 }
