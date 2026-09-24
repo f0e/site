@@ -9,11 +9,21 @@ import svelte from "@astrojs/svelte";
 
 import react from "@astrojs/react";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://tekno.sh",
 
-  integrations: [mdx(), svelte(), react()],
+  integrations: [
+    mdx(),
+    svelte(),
+    react(),
+    // skip the 404 page
+    sitemap({
+      filter: (page) => !/\/404$/.test(page),
+    }),
+  ],
 
   vite: {
     plugins: [tailwindcss()],
