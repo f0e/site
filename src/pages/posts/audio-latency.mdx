@@ -70,7 +70,9 @@ If you do choose this method, you'll still need to follow [the drivers section o
 <LatencyPlot
   data={Object.values(results).filter((result) => result.focus === "latency")}
   alt="Latency-focused results summary"
-  height={265 /* @todo: dont use height, somehow set the height for each bar to a fixed amt so i dont need to tweak shit manually */}
+  height={
+    265 /* @todo: dont use height, somehow set the height for each bar to a fixed amt so i dont need to tweak shit manually */
+  }
 />
 
 #### i care about audio quality

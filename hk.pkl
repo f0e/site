@@ -1,52 +1,53 @@
-amends "package://github.com/jdx/hk/releases/download/v1.26.0/hk@1.26.0#/Config.pkl"
-import "package://github.com/jdx/hk/releases/download/v1.26.0/hk@1.26.0#/Builtins.pkl"
+amends "package://github.com/jdx/hk/releases/download/v2.1.0/hk@2.1.0#/Config.pkl"
+import "package://github.com/jdx/hk/releases/download/v2.1.0/hk@2.1.0#/Builtins.pkl"
 
-local linters = new Mapping<String, Step> {
-    ["prettier"] {
-        glob = "*.{js,ts,jsx,tsx,svelte,astro,json,css,scss,html}"
-        check = "bun prettier --check {{files}}"
-        fix = "bun prettier --write {{files}}"
+steps {
+    ["prettier"] = (Builtins.prettier) { prefix = List("bun") }
+    ["eslint"] = (Builtins.eslint) {
+        glob = List("**/*.{js,ts,jsx,tsx,svelte,astro,json,jsonc}")
+        prefix = "bun"
+        batch = false
+        check = "eslint --cache --cache-location .eslintcache --no-warn-ignored {{files}}"
+        fix = "eslint --fix --cache --cache-location .eslintcache --no-warn-ignored {{files}}"
     }
-    ["eslint"] {
-        glob = "*.{js,ts,jsx,tsx,svelte,astro}"
-        check = "bun eslint --cache --cache-location .eslintcache {{files}}"
-        fix = "bun eslint --fix --cache --cache-location .eslintcache {{files}}"
+    ["bun-lockfile"] {
+        glob = List("package.json", "bun.lock")
+        check = "bun install --frozen-lockfile --lockfile-only"
     }
-    ["pkl"] {
-        glob = "*.pkl"
-        check = "pkl eval {{files}} >/dev/null"
+    ["hk-validate"] {
+        glob = "hk.pkl"
+        check = "hk validate"
     }
-    ["fix-missing-eol"] = new Step {
-        check = "hk util end-of-file-fixer {{ files }}"
-        fix = "hk util end-of-file-fixer --fix {{ files }}"
-    }
-    ["check-added-large-files"] = new Step {
-        glob = "*"
-        check = "hk util check-added-large-files --maxkb 10000 {{ files }}"
-    }
-    ["check-merge-conflict-markers"] = new Step {
-        glob = "*"
-        check = "hk util check-merge-conflict --assume-in-merge {{ files }}"
-    }
-    ["check-trailing-whitespace"] = new Step {
-        check = "hk util trailing-whitespace {{ files }}"
-        fix = "hk util trailing-whitespace --fix {{ files }}"
+    ["newlines"] = Builtins.newlines
+    ["trailing-whitespace"] = Builtins.trailing_whitespace
+    ["mixed-line-ending"] = Builtins.mixed_line_ending
+    ["check-merge-conflict"] = Builtins.check_merge_conflict
+    ["check-case-conflict"] = Builtins.check_case_conflict
+    ["detect-private-key"] = Builtins.detect_private_key
+    ["check-added-large-files"] = (Builtins.check_added_large_files) {
+        check = "hk util check-added-large-files --maxkb 10000 {{files}}"
     }
 }
 
 hooks {
     ["pre-commit"] {
         fix = true
-        stash = "patch-file"
-        steps = linters
+        stash = "git"
     }
 
-    ["fix"] {
-        fix = true
-        steps = linters
+    ["commit-msg"] {
+        steps {
+            ["check-conventional-commit"] = Builtins.check_conventional_commit
+        }
     }
 
+    // type checking is slow, so it only runs in `hk check`
     ["check"] {
-        steps = linters
+        steps {
+            ["astro-check"] {
+                glob = "**/*.{astro,ts,tsx}"
+                check = "bun astro check"
+            }
+        }
     }
 }

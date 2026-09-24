@@ -1,8 +1,7 @@
 [tools]
-bun = "latest"
-hk = "v1.26.0"
-node = "latest"
-pkl = "latest"
+bun = "1.4.2"
+hk = "v2.1.0"
+node = "24.20.0"
 
 [tasks.setup]
 run = """
